@@ -1,53 +1,28 @@
-import React, { useState } from "react";
-import LoginScreen, { SocialButton } from "react-native-login-screen";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginScreen from "./screens/LoginScreen";
+import HomeScreen from "./screens/HomeScreen";
 
-import { StyleSheet, View } from "react-native";
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <LoginScreen
-      logoImageSource={require("./assets/logo.png")}
-      onLoginPress={() => {}}
-      onSignupPress={() => {}}
-      onEmailChange={(email) => {}}
-      onPasswordChange={(password) => {}}
-      style={styles.container}
-    >
-      <SocialButton
-        text='Continue with Google'
-        style={styles.socialButton}
-        imageSource={require("./assets/social/google.png")}
-        onPress={() => {}}
-      />
-      <SocialButton
-        text='Continue with Facebook'
-        style={styles.socialButton}
-        onPress={() => {}}
-      />
-      <SocialButton
-        text='Continue with Apple'
-        imageSource={require("./assets/social/apple.png")}
-        style={styles.socialButton}
-        onPress={() => {}}
-      />
-      <SocialButton
-        text='Continue with Discord'
-        imageSource={require("./assets/social/discord.png")}
-        style={styles.socialButton}
-        onPress={() => {}}
-      />
-    </LoginScreen>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name='Login'
+          options={{
+            headerShown: false,
+          }}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name='Home'
+          options={{ headerShown: false }}
+          component={HomeScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  socialButton: {
-    marginBottom: 10,
-  },
-});
