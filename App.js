@@ -1,40 +1,42 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-} from "react-native";
-import axios from "axios";
+import LoginScreen, { SocialButton } from "react-native-login-screen";
+
+import { StyleSheet, View } from "react-native";
 
 export default function App() {
-  const [data, setData] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
-
-  const getPredictions = async () => {
-    const response = await axios.post("http://localhost:3000/", { imageUrl });
-
-    console.log(response);
-  };
-
   return (
-    <View style={styles.container}>
-      <StatusBar style='auto' />
-      <TextInput
-        style={{
-          height: 40,
-          width: 300,
-          borderColor: "gray",
-          borderWidth: 1,
-        }}
-        onChange={(val) => setImageUrl(val.nativeEvent.text)}
+    <LoginScreen
+      logoImageSource={require("./assets/logo.png")}
+      onLoginPress={() => {}}
+      onSignupPress={() => {}}
+      onEmailChange={(email) => {}}
+      onPasswordChange={(password) => {}}
+      style={styles.container}
+    >
+      <SocialButton
+        text='Continue with Google'
+        style={styles.socialButton}
+        imageSource={require("./assets/social/google.png")}
+        onPress={() => {}}
       />
-      <TouchableHighlight onPress={getPredictions}>
-        <Text>Press this button to submit editing</Text>
-      </TouchableHighlight>
-    </View>
+      <SocialButton
+        text='Continue with Facebook'
+        style={styles.socialButton}
+        onPress={() => {}}
+      />
+      <SocialButton
+        text='Continue with Apple'
+        imageSource={require("./assets/social/apple.png")}
+        style={styles.socialButton}
+        onPress={() => {}}
+      />
+      <SocialButton
+        text='Continue with Discord'
+        imageSource={require("./assets/social/discord.png")}
+        style={styles.socialButton}
+        onPress={() => {}}
+      />
+    </LoginScreen>
   );
 }
 
@@ -44,5 +46,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  socialButton: {
+    marginBottom: 10,
   },
 });
