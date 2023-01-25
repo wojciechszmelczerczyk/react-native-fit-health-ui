@@ -1,13 +1,23 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
 import { StyleSheet } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { auth } from "../firebase";
 import { signInUser } from "../services/UserService";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home");
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   const signIn = async () => {
     try {
