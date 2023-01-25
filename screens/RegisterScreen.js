@@ -3,16 +3,16 @@ import LoginScreen, { SocialButton } from "react-native-login-screen";
 import { StyleSheet } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { auth } from "../firebase";
-import { signInUser } from "../services/UserService";
+import { signUpUser } from "../services/UserService";
 
-export default function Login({ navigation }) {
+export default function Register({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
 
-  const signIn = async () => {
+  const signUp = async () => {
     try {
-      const res = await signInUser(auth, email.current, password.current);
-      if (res.user) navigation.navigate("Home");
+      const res = await signUpUser(auth, email.current, password.current);
+      if (res.user) navigation.navigate("Login");
     } catch (err) {}
   };
 
@@ -20,10 +20,12 @@ export default function Login({ navigation }) {
     <KeyboardAvoidingView style={styles.container}>
       <LoginScreen
         logoImageSource={require("../assets/logo.png")}
-        onLoginPress={signIn}
+        onLoginPress={signUp}
         onSignupPress={() => {
-          navigation.navigate("Register");
+          navigation.navigate("Login");
         }}
+        signupText='Login'
+        loginButtonText='Sign Up'
         onEmailChange={(mail) => (email.current = mail)}
         onPasswordChange={(pass) => (password.current = pass)}
         style={{ backgroundColor: "#fff" }}
