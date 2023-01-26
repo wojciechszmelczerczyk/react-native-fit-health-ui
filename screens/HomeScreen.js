@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBottomBar } from "../components/NavBottomBar";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   return <NavBottomBar />;
 };
 

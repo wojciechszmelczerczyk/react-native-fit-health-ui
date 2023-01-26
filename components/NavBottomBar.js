@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   Alert,
   Animated,
@@ -9,8 +9,7 @@ import {
 import { CurvedBottomBar } from "react-native-curved-bottom-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import OcticonsIcons from "react-native-vector-icons/Octicons";
-
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
@@ -18,8 +17,7 @@ import DietScreen from "../screens/DietScreen";
 
 export const NavBottomBar = () => {
 
-
-const [isSidebarVisible, setIsSidebarVisible] = useState(false)
+  const navigation = useNavigation();
 
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
@@ -94,11 +92,13 @@ const [isSidebarVisible, setIsSidebarVisible] = useState(false)
             name='Main'
             options={{
               headerRight: () => (
-                <TouchableOpacity onPress={() => setIsSidebarVisible(!isSidebarVisible)}>
-                  <OcticonsIcons
-                    name={isSidebarVisible ? "x":"three-bars"}
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Profile")}
+                >
+                  <MaterialCommunityIcons
+                    name={"account-circle-outline"}
                     size={30}
-                    style={{ marginRight: 15 }}
+                    style={{ marginRight: 15, color: "grey" }}
                   />
                 </TouchableOpacity>
               ),
@@ -110,11 +110,15 @@ const [isSidebarVisible, setIsSidebarVisible] = useState(false)
             name='Training'
             options={{
               headerRight: () => (
-                <OcticonsIcons
-                  name={"three-bars"}
-                  size={30}
-                  style={{ marginRight: 15 }}
-                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Profile")}
+                >
+                  <MaterialCommunityIcons
+                    name={"account-circle-outline"}
+                    size={30}
+                    style={{ marginRight: 15, color: "grey" }}
+                  />
+                </TouchableOpacity>
               ),
             }}
             component={TrainingScreen}
@@ -124,11 +128,15 @@ const [isSidebarVisible, setIsSidebarVisible] = useState(false)
             name='Diet'
             options={{
               headerRight: () => (
-                <OcticonsIcons
-                  name={"three-bars"}
-                  size={30}
-                  style={{ marginRight: 15 }}
-                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Profile")}
+                >
+                  <MaterialCommunityIcons
+                    name={"account-circle-outline"}
+                    size={30}
+                    style={{ marginRight: 15, color: "grey" }}
+                  />
+                </TouchableOpacity>
               ),
             }}
             position='RIGHT'
@@ -138,11 +146,15 @@ const [isSidebarVisible, setIsSidebarVisible] = useState(false)
             name='Chatbot'
             options={{
               headerRight: () => (
-                <OcticonsIcons
-                  name={"three-bars"}
-                  size={30}
-                  style={{ marginRight: 15 }}
-                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Profile")}
+                >
+                  <MaterialCommunityIcons
+                    name={"account-circle-outline"}
+                    size={30}
+                    style={{ marginRight: 15, color: "grey" }}
+                  />
+                </TouchableOpacity>
               ),
             }}
             component={ChatbotScreen}
