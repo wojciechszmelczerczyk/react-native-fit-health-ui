@@ -6,8 +6,11 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 import UserScreen from "./screens/UserScreen";
+import { maybeCompleteAuthSession } from "expo-web-browser";
 
 const Stack = createNativeStackNavigator();
+
+maybeCompleteAuthSession();
 
 export default function App() {
   return (

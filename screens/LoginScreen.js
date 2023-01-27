@@ -1,23 +1,41 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
-import { StyleSheet } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
+import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import { auth } from "../firebase";
 import { signInUser } from "../services/UserService";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+
+// expo auth solution
+import { useIdTokenAuthRequest } from "expo-auth-session/providers/google";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
 
+  // expo auth solution
+  const [request, response, promptAsync] = useIdTokenAuthRequest({
+    clientId:
+      "",
+  });
+
   useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.navigate("Home");
       }
     });
     return unsubscribe;
-  }, []);
+  }, [response]);
 
   const signIn = async () => {
     try {
@@ -40,9 +58,12 @@ export default function Login({ navigation }) {
       >
         <SocialButton
           text='Continue with Google'
-          style={styles.socialButton}
+          disabled={!request}
           imageSource={require("../assets/social/google.png")}
-          onPress={() => {}}
+          style={styles.socialButton}
+          onPress={() => {
+            promptAsync();
+          }}
         />
         <SocialButton
           text='Continue with Facebook'
