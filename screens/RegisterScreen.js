@@ -20,6 +20,7 @@ export default function Register({ navigation }) {
     <KeyboardAvoidingView style={styles.container}>
       <LoginScreen
         logoImageSource={require("../assets/logo.png")}
+        loginButtonStyle={{ backgroundColor: "#6432ff" }}
         onLoginPress={signUp}
         onSignupPress={() => {
           navigation.navigate("Login");

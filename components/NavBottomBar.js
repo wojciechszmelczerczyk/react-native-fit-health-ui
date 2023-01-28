@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { CurvedBottomBar } from "react-native-curved-bottom-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import OcticonsIcons from "react-native-vector-icons/Octicons";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
@@ -16,8 +15,9 @@ import ChatbotScreen from "../screens/ChatbotScreen";
 import DietScreen from "../screens/DietScreen";
 
 export const NavBottomBar = () => {
-
   const navigation = useNavigation();
+
+  const doSpecificAction = () => {};
 
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
@@ -41,7 +41,7 @@ export const NavBottomBar = () => {
       <MaterialCommunityIcons
         name={icon}
         size={25}
-        color={routeName === selectedTab ? "black" : "gray"}
+        color={routeName === selectedTab ? "#9432ff" : "#6432ff"}
       />
     );
   };
@@ -80,9 +80,9 @@ export const NavBottomBar = () => {
                   flex: 1,
                   justifyContent: "center",
                 }}
-                onPress={() => Alert.alert("Click Action")}
+                onPress={doSpecificAction}
               >
-                <MaterialCommunityIcons name={"plus"} color='gray' size={25} />
+                <MaterialCommunityIcons name={"plus"} color='#fff' size={25} />
               </TouchableOpacity>
             </Animated.View>
           )}
@@ -98,10 +98,11 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"account-circle-outline"}
                     size={30}
-                    style={{ marginRight: 15, color: "grey" }}
+                    style={{ marginRight: 15, color: "#6432ff" }}
                   />
                 </TouchableOpacity>
               ),
+              headerTitleAlign: "center",
             }}
             component={MainScreen}
             position='LEFT'
@@ -116,10 +117,11 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"account-circle-outline"}
                     size={30}
-                    style={{ marginRight: 15, color: "grey" }}
+                    style={{ marginRight: 15, color: "#6432ff" }}
                   />
                 </TouchableOpacity>
               ),
+              headerTitleAlign: "center",
             }}
             component={TrainingScreen}
             position='LEFT'
@@ -134,10 +136,11 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"account-circle-outline"}
                     size={30}
-                    style={{ marginRight: 15, color: "grey" }}
+                    style={{ marginRight: 15, color: "#6432ff" }}
                   />
                 </TouchableOpacity>
               ),
+              headerTitleAlign: "center",
             }}
             position='RIGHT'
             component={DietScreen}
@@ -152,10 +155,11 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"account-circle-outline"}
                     size={30}
-                    style={{ marginRight: 15, color: "grey" }}
+                    style={{ marginRight: 15, color: "#6432ff" }}
                   />
                 </TouchableOpacity>
               ),
+              headerTitleAlign: "center",
             }}
             component={ChatbotScreen}
             position='RIGHT'
@@ -180,7 +184,7 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#6432ff",
     bottom: 18,
     shadowColor: "#000",
     shadowOffset: {
