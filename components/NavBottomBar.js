@@ -1,11 +1,5 @@
-import React from "react";
-import {
-  Alert,
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import { CurvedBottomBar } from "react-native-curved-bottom-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
@@ -17,7 +11,7 @@ import DietScreen from "../screens/DietScreen";
 export const NavBottomBar = () => {
   const navigation = useNavigation();
 
-  const doSpecificAction = () => {};
+  const [modalVisible, setModalVisible] = useState(false);
 
   const _renderIcon = (routeName, selectedTab) => {
     let icon = "";
@@ -80,7 +74,7 @@ export const NavBottomBar = () => {
                   flex: 1,
                   justifyContent: "center",
                 }}
-                onPress={doSpecificAction}
+                onPress={() => setModalVisible(!modalVisible)}
               >
                 <MaterialCommunityIcons name={"plus"} color='#fff' size={25} />
               </TouchableOpacity>
@@ -143,7 +137,12 @@ export const NavBottomBar = () => {
               headerTitleAlign: "center",
             }}
             position='RIGHT'
-            component={DietScreen}
+            component={() => (
+              <DietScreen
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+              />
+            )}
           />
           <CurvedBottomBar.Screen
             name='Chatbot'
