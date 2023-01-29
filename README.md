@@ -42,19 +42,44 @@ npm i
 
 #### Setup env variables
 
+<details>
+<summary></summary>
+
 ```dockerfile
 
 # Link to API: https://rapidapi.com/edamam/api/recipe-search-and-diet/
 
-# Food nutrition API base url
+# Food nutrition RapidAPI
+
 FOOD_API_BASE_URL=
 
-# Food nutrition API key
 X_RAPIADPI_KEY=
 
-# Food nutrition API host
 X_RAPIADPI_HOST=
+
+# Firebase config
+
+FIREBASE_API_KEY=
+
+FIREBASE_AUTH_DOMAIN=
+
+FIREBASE_PROJECT_ID=
+
+FIREBASE_STORAGE_BUCKET=
+
+FIREBASE_MESSAGING_SENDER_ID=
+
+FIREBASE_APP_ID=
+
+FIREBASE_MEASUREMENT_ID=
+
+# Google auth
+
+GOOGLE_AUTH_CLIENT_ID=
+
 ```
+
+</details>
 
 #### Run expo app
 

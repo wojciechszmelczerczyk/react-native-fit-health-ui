@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
 
   // expo auth solution
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId: "",
+    clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
   });
 
   useEffect(() => {

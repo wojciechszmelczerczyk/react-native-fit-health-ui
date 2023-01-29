@@ -1,6 +1,4 @@
 import axios from "axios";
-import { config } from "dotenv";
-config();
 
 const axiosInstance = axios.create({
   baseURL: process.env.FOOD_API_BASE_URL,
