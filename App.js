@@ -1,5 +1,5 @@
-// import "react-native-gesture-handler";
 import * as React from "react";
+import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
@@ -8,8 +8,10 @@ import HomeScreen from "./screens/HomeScreen";
 import UserScreen from "./screens/UserScreen";
 import { maybeCompleteAuthSession } from "expo-web-browser";
 
+
 const Stack = createNativeStackNavigator();
 
+LogBox.ignoreAllLogs();
 maybeCompleteAuthSession();
 
 export default function App() {

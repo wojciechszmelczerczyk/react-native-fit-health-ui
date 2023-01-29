@@ -18,8 +18,7 @@ export default function Login({ navigation }) {
 
   // expo auth solution
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId:
-      "",
+    clientId: "",
   });
 
   useEffect(() => {
