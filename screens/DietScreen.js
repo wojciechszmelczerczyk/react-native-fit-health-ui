@@ -4,21 +4,25 @@ import {
   TextInput,
   View,
   Pressable,
-  ScrollView,
   SafeAreaView,
   Dimensions,
-  Alert,
   Modal,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { ProgressChart } from "react-native-chart-kit";
 import { BlurView } from "expo-blur";
+import dishArray from "../data/dishData";
+import DropDownPicker from "react-native-dropdown-picker";
+
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FeatherIcons from "react-native-vector-icons/Feather";
 
 const data = {
-  labels: ["Protein", "Carbs", "Fat"], // optional
+  labels: ["Protein", "Carbs", "Fat"],
   data: [0, 0, 0],
 };
 const screenWidth = Dimensions.get("window").width;
+const dishAreaHeight = Dimensions.get("window").height - 235;
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -31,7 +35,58 @@ const chartConfig = {
 };
 const DietScreen = ({ modalVisible, setModalVisible }) => {
   const [searchDish, setSearchDish] = React.useState("Useless Text");
+  const [openBreakfast, setOpenBreakfast] = useState(false);
+  const [openLunch, setOpenLunch] = useState(false);
+  const [openDinner, setOpenDinner] = useState(false);
 
+  const onOpenBreakfast = useCallback(() => {
+    setOpenLunch(false);
+    setOpenDinner(false);
+  }, []);
+
+  const onOpenLunch = useCallback(() => {
+    setOpenBreakfast(false);
+    setOpenDinner(false);
+  }, []);
+
+  const onOpenDinner = useCallback(() => {
+    setOpenBreakfast(false);
+    setOpenLunch(false);
+  }, []);
+
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {
+      label: "Apple",
+      value: "apple",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+    {
+      label: "Banana",
+      value: "banana",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+    {
+      label: "Banana",
+      value: "banana",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+    {
+      label: "Apple",
+      value: "apple",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+    {
+      label: "Banana",
+      value: "banana",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+    {
+      label: "Banana",
+      value: "banana",
+      icon: () => <MaterialIcons name='cloud-done' />,
+    },
+  ]);
   return (
     <>
       {modalVisible ? (
@@ -49,7 +104,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
         ""
       )}
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <View contentContainerStyle={styles.scrollView}>
           <ProgressChart
             style={styles.progressChart}
             data={data}
@@ -60,15 +115,68 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
             chartConfig={chartConfig}
             hideLegend={false}
           />
-          
+          <View style={{ ...styles.dishContainer, minHeight: dishAreaHeight }}>
+            {dishArray.map((dish, i) => (
+              <DropDownPicker
+                key={i}
+                open={
+                  dish === "Breakfast"
+                    ? openBreakfast
+                    : dish === "Lunch"
+                    ? openLunch
+                    : openDinner
+                }
+                onOpen={
+                  dish === "Breakfast"
+                    ? onOpenBreakfast
+                    : dish === "Lunch"
+                    ? onOpenLunch
+                    : onOpenDinner
+                }
+                listMode={"SCROLLVIEW"}
+                dropDownContainerStyle={styles.dishDropdown}
+                dropDownDirection={"BOTTOM"}
+                placeholder={`${dish}: ${0} kcal`}
+                disabled={items.length ? false : true}
+                disableBorderRadius={true}
+                style={styles.dishDropdown}
+                value={value}
+                itemSeparator={true}
+                itemSeparatorStyle={styles.separator}
+                zIndex={i === 0 ? 3000 : i === 1 ? 2000 : 1000}
+                zIndexInverse={i === 0 ? 1000 : i === 1 ? 2000 : 3000}
+                items={items}
+                setOpen={
+                  dish === "Breakfast"
+                    ? setOpenBreakfast
+                    : dish === "Lunch"
+                    ? setOpenLunch
+                    : setOpenDinner
+                }
+                setItems={setItems}
+                ArrowDownIconComponent={() =>
+                  items.length ? (
+                    <MaterialIcons name={"keyboard-arrow-right"} size={20} />
+                  ) : (
+                    ""
+                  )
+                }
+                ArrowUpIconComponent={() =>
+                  items.length ? (
+                    <MaterialIcons name={"keyboard-arrow-down"} size={20} />
+                  ) : (
+                    ""
+                  )
+                }
+                closeAfterSelecting={false}
+                min={0}
+              />
+            ))}
+          </View>
           <Modal
             animationType='slide'
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
@@ -87,7 +195,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
               </View>
             </View>
           </Modal>
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </>
   );
@@ -154,5 +262,23 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+  dishContainer: {
+    alignItems: "center",
+    flex: 1,
+    marginTop: 35,
+  },
+  dishDropdown: {
+    maxHeight: 150,
+    width: 360,
+    flex: 1,
+    borderColor: "transparent",
+    borderRadius: 30,
+    marginBottom: 65,
+  },
+  separator: {
+    backgroundColor: "#ddd",
+    width: "95%",
+    marginLeft: 6,
   },
 });
