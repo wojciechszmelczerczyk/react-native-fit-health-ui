@@ -1,1 +1,5 @@
-export default dishArray = ["Breakfast", "Lunch", "Dinner"];
+export default dishArray = [
+  { label: "Breakfast", value: "breakfast" },
+  { label: "Lunch", value: "lunch" },
+  { label: "Dinner", value: "dinner" },
+];

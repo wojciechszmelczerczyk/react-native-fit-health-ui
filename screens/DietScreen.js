@@ -8,14 +8,14 @@ import {
   Dimensions,
   Modal,
 } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ProgressChart } from "react-native-chart-kit";
 import { BlurView } from "expo-blur";
 import dishArray from "../data/dishData";
 import DropDownPicker from "react-native-dropdown-picker";
-
+import { getDish } from "../services/DietService";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import FeatherIcons from "react-native-vector-icons/Feather";
+import * as _ from "lodash";
 
 const data = {
   labels: ["Protein", "Carbs", "Fat"],
@@ -34,10 +34,19 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 const DietScreen = ({ modalVisible, setModalVisible }) => {
-  const [searchDish, setSearchDish] = React.useState("Useless Text");
   const [openBreakfast, setOpenBreakfast] = useState(false);
   const [openLunch, setOpenLunch] = useState(false);
   const [openDinner, setOpenDinner] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false);
+  const [openOptionsSearch, setOpenOptionsSearch] = useState(false);
+  const [value, setValue] = useState(null);
+  const [valueSearch, setValueSearch] = useState(null);
+  const [dishes, setDishes] = useState([]);
+  const [chosenDishes, setChosenDishes] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const onOpenOptions = useCallback(() => setOpenOptionsSearch(false), []);
+  const onOpenOptionsSearch = useCallback(() => setOpenOptions(false), []);
 
   const onOpenBreakfast = useCallback(() => {
     setOpenLunch(false);
@@ -54,39 +63,30 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
     setOpenLunch(false);
   }, []);
 
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {
-      label: "Apple",
-      value: "apple",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-    {
-      label: "Banana",
-      value: "banana",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-    {
-      label: "Banana",
-      value: "banana",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-    {
-      label: "Apple",
-      value: "apple",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-    {
-      label: "Banana",
-      value: "banana",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-    {
-      label: "Banana",
-      value: "banana",
-      icon: () => <MaterialIcons name='cloud-done' />,
-    },
-  ]);
+  const onChangeSearchValue = async (text) => {
+    setLoading(true);
+
+    const { data } = await getDish(text);
+
+    const dishLabels = data.hits.map((dish) => dish.recipe.label);
+
+    const formattedDishLabels = dishLabels.map((label) => {
+      return { label, value: label.toLowerCase() };
+    });
+    setDishes(formattedDishLabels);
+    setLoading(false);
+  };
+
+  const submitModal = async () => {
+    const chosenDish = await getDish(valueSearch);
+    chosenDishes.push({
+      label: chosenDish.data.hits[0].recipe.label,
+      value: chosenDish.data.hits[0].recipe.label.toLowerCase(),
+    });
+    setChosenDishes(chosenDishes);
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <>
       {modalVisible ? (
@@ -120,24 +120,24 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
               <DropDownPicker
                 key={i}
                 open={
-                  dish === "Breakfast"
+                  dish.label === "Breakfast"
                     ? openBreakfast
-                    : dish === "Lunch"
+                    : dish.label === "Lunch"
                     ? openLunch
                     : openDinner
                 }
                 onOpen={
-                  dish === "Breakfast"
+                  dish.label === "Breakfast"
                     ? onOpenBreakfast
-                    : dish === "Lunch"
+                    : dish.label === "Lunch"
                     ? onOpenLunch
                     : onOpenDinner
                 }
                 listMode={"SCROLLVIEW"}
                 dropDownContainerStyle={styles.dishDropdown}
                 dropDownDirection={"BOTTOM"}
-                placeholder={`${dish}: ${0} kcal`}
-                disabled={items.length ? false : true}
+                placeholder={`${dish.label}: ${0} kcal`}
+                disabled={dishes.length ? false : true}
                 disableBorderRadius={true}
                 style={styles.dishDropdown}
                 value={value}
@@ -145,24 +145,23 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
                 itemSeparatorStyle={styles.separator}
                 zIndex={i === 0 ? 3000 : i === 1 ? 2000 : 1000}
                 zIndexInverse={i === 0 ? 1000 : i === 1 ? 2000 : 3000}
-                items={items}
+                items={chosenDishes}
                 setOpen={
-                  dish === "Breakfast"
+                  dish.label === "Breakfast"
                     ? setOpenBreakfast
-                    : dish === "Lunch"
+                    : dish.label === "Lunch"
                     ? setOpenLunch
                     : setOpenDinner
                 }
-                setItems={setItems}
                 ArrowDownIconComponent={() =>
-                  items.length ? (
+                  dishes.length ? (
                     <MaterialIcons name={"keyboard-arrow-right"} size={20} />
                   ) : (
                     ""
                   )
                 }
                 ArrowUpIconComponent={() =>
-                  items.length ? (
+                  dishes.length ? (
                     <MaterialIcons name={"keyboard-arrow-down"} size={20} />
                   ) : (
                     ""
@@ -181,14 +180,42 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>Add dish!</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setSearchDish}
-                  value={searchDish}
+                <DropDownPicker
+                  items={dishes}
+                  zIndex={2000}
+                  zIndexInverse={1000}
+                  value={valueSearch}
+                  searchable={true}
+                  onChangeSearchText={(text) => onChangeSearchValue(text)}
+                  setValue={(value) => setValueSearch(value)}
+                  loading={loading}
+                  itemKey={dishArray}
+                  itemSeparator={true}
+                  itemSeparatorStyle={styles.separator}
+                  dropDownDirection={"BOTTOM"}
+                  placeholder={"Search dish by ingredient"}
+                  open={openOptionsSearch}
+                  onOpen={onOpenOptionsSearch}
+                  setOpen={setOpenOptionsSearch}
+                />
+                <DropDownPicker
+                  items={dishArray}
+                  zIndex={1000}
+                  zIndexInverse={2000}
+                  value={value}
+                  itemSeparator={true}
+                  itemSeparatorStyle={styles.separator}
+                  setValue={setValue}
+                  itemKey={dishArray}
+                  dropDownDirection={"BOTTOM"}
+                  placeholder={"Choose dish"}
+                  open={openOptions}
+                  onOpen={onOpenOptions}
+                  setOpen={setOpenOptions}
                 />
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
+                  onPress={submitModal}
                 >
                   <Text style={styles.textStyle}>Hide Modal</Text>
                 </Pressable>
@@ -237,6 +264,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
+    marginTop: 20,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
