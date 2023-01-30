@@ -1,53 +1,77 @@
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   Pressable,
   SafeAreaView,
   Dimensions,
   Modal,
+  AsyncStorage
 } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { ProgressChart } from "react-native-chart-kit";
 import { BlurView } from "expo-blur";
 import dishArray from "../data/dishData";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getDish } from "../services/DietService";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import * as _ from "lodash";
+import _ from "lodash";
 
-const data = {
-  labels: ["Protein", "Carbs", "Fat"],
-  data: [0, 0, 0],
-};
+// get screen width
 const screenWidth = Dimensions.get("window").width;
-const dishAreaHeight = Dimensions.get("window").height - 235;
 
+// get screen height of dishes area of screen (3 dropdowns)
+const dishAreaHeight = Dimensions.get("window").height - 235;
+const z = 5;
+// config object of nutrition chart
 const chartConfig = {
   backgroundColor: "#e26a00",
   backgroundGradientFrom: "white",
   backgroundGradientTo: "white",
   color: (opacity = 1) => `rgba(100, 50, 255, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
+  strokeWidth: 2,
   barPercentage: 0.5,
-  useShadowColorFromDataset: false, // optional
+  useShadowColorFromDataset: false,
 };
+
 const DietScreen = ({ modalVisible, setModalVisible }) => {
+  useEffect(() => {
+    AsyncStorage.getItem("currentDish").then((res) => setChosenDishes(JSON.parse(res)));
+  });
+
+  // boolean condition, when dropdown from diet page is open/close
   const [openBreakfast, setOpenBreakfast] = useState(false);
   const [openLunch, setOpenLunch] = useState(false);
   const [openDinner, setOpenDinner] = useState(false);
+
+  // boolean condition, when dropdowns from modal are open/close
   const [openOptions, setOpenOptions] = useState(false);
   const [openOptionsSearch, setOpenOptionsSearch] = useState(false);
+
   const [value, setValue] = useState(null);
   const [valueSearch, setValueSearch] = useState(null);
+
+  // fetched filtered dishes
   const [dishes, setDishes] = useState([]);
+
+  // dish submitted from modal
   const [chosenDishes, setChosenDishes] = useState([]);
+
+  // protein, carbs and fat information of submitted dish
+  const [nutrition, setNutrition] = useState({
+    protein: 0.6,
+    carbs: 0.7,
+    fat: 0.9,
+  });
+
+  // loading spinner condition
   const [loading, setLoading] = useState(false);
 
+  // when one of dropdown from modal is opened, second is being closen
   const onOpenOptions = useCallback(() => setOpenOptionsSearch(false), []);
   const onOpenOptionsSearch = useCallback(() => setOpenOptions(false), []);
 
+  // when on of dropdown from diet page is opened, remaining are being closen
   const onOpenBreakfast = useCallback(() => {
     setOpenLunch(false);
     setOpenDinner(false);
@@ -63,28 +87,52 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
     setOpenLunch(false);
   }, []);
 
+  // when text from search located in modal change, fetch dish base on input text
   const onChangeSearchValue = async (text) => {
+    // on load spinner
     setLoading(true);
 
+    // get data from food nutrition api
     const { data } = await getDish(text);
 
+    // get dishes labels only
     const dishLabels = data.hits.map((dish) => dish.recipe.label);
 
+    // format dish labels array to {label, value} format
     const formattedDishLabels = dishLabels.map((label) => {
       return { label, value: label.toLowerCase() };
     });
+
+    // set component state
     setDishes(formattedDishLabels);
+
+    // off load spinner
     setLoading(false);
   };
 
+  // submit modal
   const submitModal = async () => {
+    // get dish by search input
     const chosenDish = await getDish(valueSearch);
+
+    // push to state with dish from submitted modal in {label, value} format
     chosenDishes.push({
       label: chosenDish.data.hits[0].recipe.label,
       value: chosenDish.data.hits[0].recipe.label.toLowerCase(),
     });
-    setChosenDishes(chosenDishes);
+
+    // set state with chosen dishes
+    // setChosenDishes(chosenDishes);
+    await AsyncStorage.setItem("currentDish", JSON.stringify(chosenDishes));
+
+    // off modal
     setModalVisible(!modalVisible);
+  };
+
+  // chart data
+  const data = {
+    labels: ["Protein", "Carbs", "Fat"],
+    data: [nutrition.protein, nutrition.carbs, nutrition.fat],
   };
 
   return (
@@ -137,7 +185,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
                 dropDownContainerStyle={styles.dishDropdown}
                 dropDownDirection={"BOTTOM"}
                 placeholder={`${dish.label}: ${0} kcal`}
-                disabled={dishes.length ? false : true}
+                disabled={chosenDishes.length ? false : true}
                 disableBorderRadius={true}
                 style={styles.dishDropdown}
                 value={value}
@@ -154,14 +202,14 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
                     : setOpenDinner
                 }
                 ArrowDownIconComponent={() =>
-                  dishes.length ? (
+                  chosenDishes.length ? (
                     <MaterialIcons name={"keyboard-arrow-right"} size={20} />
                   ) : (
                     ""
                   )
                 }
                 ArrowUpIconComponent={() =>
-                  dishes.length ? (
+                  chosenDishes.length ? (
                     <MaterialIcons name={"keyboard-arrow-down"} size={20} />
                   ) : (
                     ""
@@ -217,7 +265,13 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
                   style={[styles.button, styles.buttonClose]}
                   onPress={submitModal}
                 >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
+                  <Text style={styles.textStyle}>Submit dish</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
                 </Pressable>
               </View>
             </View>
