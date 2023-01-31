@@ -16,9 +16,10 @@ User interface for application.
 
 ## Prerequisities
 
-- `Node` installed
-- `Firebase Auth` configurated
-- `GCP Auth` configurated
+- `Node` 
+- `Firebase Auth` 
+- `Google Cloud Platform` 
+- `Meta for Developers` 
 
 ## To run
 
