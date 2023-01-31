@@ -6,25 +6,41 @@ import { signInUser } from "../services/UserService";
 import {
   onAuthStateChanged,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithCredential,
 } from "firebase/auth";
 
 // expo auth solution
+import { ResponseType } from "expo-auth-session";
 import { useIdTokenAuthRequest } from "expo-auth-session/providers/google";
+import { useAuthRequest } from "expo-auth-session/providers/facebook";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
 
-  // expo auth solution
+  // google auth
   const [request, response, promptAsync] = useIdTokenAuthRequest({
     clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+  });
+
+  // facebook auth
+  const [req, res, promptAsyncc] = useAuthRequest({
+    responseType: ResponseType.Token,
+    clientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
   });
 
   useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+
+    if (res?.type === "success") {
+      const { access_token } = res.params;
+      const credential = FacebookAuthProvider.credential(access_token);
+      // Sign in with the credential from the Facebook user.
       signInWithCredential(auth, credential);
     }
 
@@ -67,8 +83,11 @@ export default function Login({ navigation }) {
         />
         <SocialButton
           text='Continue with Facebook'
+          disabled={!req}
           style={styles.socialButton}
-          onPress={() => {}}
+          onPress={() => {
+            promptAsyncc();
+          }}
         />
         <SocialButton
           text='Continue with Apple'
