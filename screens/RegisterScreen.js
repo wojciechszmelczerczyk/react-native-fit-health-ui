@@ -49,8 +49,8 @@ export default function Register({ navigation }) {
           onPress={() => {}}
         />
         <SocialButton
-          text='Continue with Discord'
-          imageSource={require("../assets/social/discord.png")}
+          text='Continue with GitHub'
+          imageSource={require("../assets/social/github.png")}
           style={styles.socialButton}
           onPress={() => {}}
         />
