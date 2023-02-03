@@ -13,7 +13,7 @@ import {
 // expo auth solution
 import { ResponseType } from "expo-auth-session";
 import { useIdTokenAuthRequest } from "expo-auth-session/providers/google";
-import { useAuthRequest } from "expo-auth-session/providers/facebook";
+import * as Facebook from "expo-auth-session/providers/facebook";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
@@ -25,22 +25,23 @@ export default function Login({ navigation }) {
   });
 
   // facebook auth
-  const [req, res, promptAsyncc] = useAuthRequest({
+  const [req, res, promptAsyncc] = Facebook.useAuthRequest({
     responseType: ResponseType.Token,
     clientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
   });
 
   useEffect(() => {
+    // Sign in with Google
     if (response?.type === "success") {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential);
     }
 
+    // Sign in with Facebook
     if (res?.type === "success") {
       const { access_token } = res.params;
       const credential = FacebookAuthProvider.credential(access_token);
-      // Sign in with the credential from the Facebook user.
       signInWithCredential(auth, credential);
     }
 
@@ -96,8 +97,8 @@ export default function Login({ navigation }) {
           onPress={() => {}}
         />
         <SocialButton
-          text='Continue with Discord'
-          imageSource={require("../assets/social/discord.png")}
+          text='Continue with GitHub'
+          imageSource={require("../assets/social/github.png")}
           style={styles.socialButton}
           onPress={() => {}}
         />

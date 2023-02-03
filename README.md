@@ -9,6 +9,8 @@ User interface for application.
 - [Techstack](#techstack)
 - [Prerequisities](#prerequisities)
 - [To run](#to-run)
+- [Architecture](#architecture)
+- [Authentication](#authentication)
 
 ## Techstack
 
@@ -16,10 +18,10 @@ User interface for application.
 
 ## Prerequisities
 
-- `Node` 
-- `Firebase Auth` 
-- `Google Cloud Platform` 
-- `Meta for Developers` 
+- `Node`
+- `Firebase Auth`
+- `Google Cloud Platform`
+- `Meta for Developers`
 
 ## To run
 
@@ -44,7 +46,7 @@ npm i
 #### Setup env variables
 
 <details>
-<summary></summary>
+<summary>env</summary>
 
 ```dockerfile
 
@@ -91,3 +93,24 @@ FACEBOOK_AUTH_CLIENT_ID=
 ```
 npm start
 ```
+
+## Architecture
+
+Client side architecture use `firebase authentication` to signin user.
+Client communicate with third party API's. Client architecture style is `REST`.
+
+<details>
+<summary>architecture</summary>
+<img src="./.github/img/frontend-arch.png">
+
+</details>
+
+## Authentication
+
+User can sign in to application with:
+
+- `user credentials` (email and password)
+- `Google`
+- `Facebook`
+- `Apple`
+- `GitHub`
