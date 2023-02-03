@@ -11,24 +11,44 @@ import {
 } from "firebase/auth";
 
 // expo auth solution
-import { ResponseType } from "expo-auth-session";
-import { useIdTokenAuthRequest } from "expo-auth-session/providers/google";
+import {
+  ResponseType,
+  useAuthRequest,
+  makeRedirectUri,
+} from "expo-auth-session";
+import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
 
+  // github
+  const discovery = {
+    authorizationEndpoint: "https://github.com/login/oauth/authorize",
+    tokenEndpoint: "https://github.com/login/oauth/access_token",
+    revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.GITHUB_AUTH_CLIENT_ID}`,
+  };
+
   // google auth
-  const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+  const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({
+    expoClientId: process.env.GOOGLE_AUTH_CLIENT_ID,
   });
 
   // facebook auth
-  const [req, res, promptAsyncc] = Facebook.useAuthRequest({
+  const [req, res, fbPrompt] = Facebook.useAuthRequest({
     responseType: ResponseType.Token,
-    clientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
+    expoClientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
   });
+
+  const [rq, rs, ghPrompt] = useAuthRequest(
+    {
+      clientId: process.env.GITHUB_AUTH_CLIENT_ID,
+      scopes: ["identity"],
+      redirectUri: makeRedirectUri({ useProxy: true }),
+    },
+    discovery
+  );
 
   useEffect(() => {
     // Sign in with Google
@@ -42,7 +62,12 @@ export default function Login({ navigation }) {
     if (res?.type === "success") {
       const { access_token } = res.params;
       const credential = FacebookAuthProvider.credential(access_token);
+
       signInWithCredential(auth, credential);
+    }
+
+    if (rs?.type === "success") {
+      const { code } = rs.params;
     }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,7 +76,7 @@ export default function Login({ navigation }) {
       }
     });
     return unsubscribe;
-  }, [response]);
+  }, [response, res]);
 
   const signIn = async () => {
     try {
@@ -79,7 +104,7 @@ export default function Login({ navigation }) {
           imageSource={require("../assets/social/google.png")}
           style={styles.socialButton}
           onPress={() => {
-            promptAsync();
+            googlePrompt();
           }}
         />
         <SocialButton
@@ -87,7 +112,7 @@ export default function Login({ navigation }) {
           disabled={!req}
           style={styles.socialButton}
           onPress={() => {
-            promptAsyncc();
+            fbPrompt();
           }}
         />
         <SocialButton
@@ -98,9 +123,12 @@ export default function Login({ navigation }) {
         />
         <SocialButton
           text='Continue with GitHub'
+          disabled={!rq}
           imageSource={require("../assets/social/github.png")}
           style={styles.socialButton}
-          onPress={() => {}}
+          onPress={() => {
+            ghPrompt();
+          }}
         />
       </LoginScreen>
     </KeyboardAvoidingView>
