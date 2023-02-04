@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Dimensions,
   Modal,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { ProgressChart } from "react-native-chart-kit";
@@ -22,7 +22,7 @@ const screenWidth = Dimensions.get("window").width;
 
 // get screen height of dishes area of screen (3 dropdowns)
 const dishAreaHeight = Dimensions.get("window").height - 235;
-const z = 5;
+
 // config object of nutrition chart
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -35,10 +35,6 @@ const chartConfig = {
 };
 
 const DietScreen = ({ modalVisible, setModalVisible }) => {
-  useEffect(() => {
-    AsyncStorage.getItem("currentDish").then((res) => setChosenDishes(JSON.parse(res)));
-  });
-
   // boolean condition, when dropdown from diet page is open/close
   const [openBreakfast, setOpenBreakfast] = useState(false);
   const [openLunch, setOpenLunch] = useState(false);
@@ -123,7 +119,6 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
 
     // set state with chosen dishes
     // setChosenDishes(chosenDishes);
-    await AsyncStorage.setItem("currentDish", JSON.stringify(chosenDishes));
 
     // off modal
     setModalVisible(!modalVisible);

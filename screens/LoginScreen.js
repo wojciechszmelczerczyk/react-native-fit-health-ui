@@ -45,7 +45,7 @@ export default function Login({ navigation }) {
     {
       clientId: process.env.GITHUB_AUTH_CLIENT_ID,
       scopes: ["identity"],
-      redirectUri: makeRedirectUri({ useProxy: true }),
+      redirectUri: makeRedirectUri({ scheme: "your.app" }),
     },
     discovery
   );
@@ -76,7 +76,7 @@ export default function Login({ navigation }) {
       }
     });
     return unsubscribe;
-  }, [response, res]);
+  }, [response, res, rs]);
 
   const signIn = async () => {
     try {
