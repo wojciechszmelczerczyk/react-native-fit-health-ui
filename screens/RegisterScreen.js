@@ -1,12 +1,64 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
-import { Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Text,
+  Platform,
+} from "react-native";
 import { auth } from "../firebase";
 import { signUpUser } from "../services/UserService";
+import {
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+
+// expo auth solution
+import { ResponseType } from "expo-auth-session";
+import * as Google from "expo-auth-session/providers/google";
+import * as Facebook from "expo-auth-session/providers/facebook";
 
 export default function Register({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
+
+  // google auth
+  const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({
+    expoClientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+  });
+
+  // facebook auth
+  const [req, res, fbPrompt] = Facebook.useAuthRequest({
+    responseType: ResponseType.Token,
+    expoClientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
+  });
+
+  useEffect(() => {
+    // Sign in with Google
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+
+    // Sign in with Facebook
+    if (res?.type === "success") {
+      const { access_token } = res.params;
+      const credential = FacebookAuthProvider.credential(access_token);
+
+      signInWithCredential(auth, credential);
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home");
+      }
+    });
+    return unsubscribe;
+  }, [response, res]);
 
   const signUp = async () => {
     try {
@@ -32,21 +84,31 @@ export default function Register({ navigation }) {
       >
         <SocialButton
           text='Continue with Google'
+          disabled={!request}
           style={styles.socialButton}
           imageSource={require("../assets/social/google.png")}
-          onPress={() => {}}
+          onPress={() => {
+            googlePrompt;
+          }}
         />
         <SocialButton
           text='Continue with Facebook'
+          disabled={!req}
           style={styles.socialButton}
-          onPress={() => {}}
+          onPress={() => {
+            fbPrompt;
+          }}
         />
-        <SocialButton
-          text='Continue with Apple'
-          imageSource={require("../assets/social/apple.png")}
-          style={styles.socialButton}
-          onPress={() => {}}
-        />
+        {Platform.OS === "ios" ? (
+          <SocialButton
+            text='Continue with Apple'
+            imageSource={require("../assets/social/apple.png")}
+            style={styles.socialButton}
+            onPress={() => {}}
+          />
+        ) : (
+          ""
+        )}
         <TouchableOpacity
           style={{ alignSelf: "flex-start" }}
           onPress={() => navigation.navigate("ForgotPassword")}

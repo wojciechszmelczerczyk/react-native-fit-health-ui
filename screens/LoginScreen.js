@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Text,
+  Platform,
 } from "react-native";
 import { auth } from "../firebase";
 import { signInUser } from "../services/UserService";
@@ -16,7 +17,7 @@ import {
 } from "firebase/auth";
 
 // expo auth solution
-import { ResponseType, useAuthRequest } from "expo-auth-session";
+import { ResponseType } from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
 
@@ -97,12 +98,16 @@ export default function Login({ navigation }) {
             fbPrompt();
           }}
         />
-        <SocialButton
-          text='Continue with Apple'
-          imageSource={require("../assets/social/apple.png")}
-          style={styles.socialButton}
-          onPress={() => {}}
-        />
+        {Platform.OS === "ios" ? (
+          <SocialButton
+            text='Continue with Apple'
+            imageSource={require("../assets/social/apple.png")}
+            style={styles.socialButton}
+            onPress={() => {}}
+          />
+        ) : (
+          ""
+        )}
         <TouchableOpacity
           style={{ alignSelf: "flex-start" }}
           onPress={() => navigation.navigate("ForgotPassword")}
