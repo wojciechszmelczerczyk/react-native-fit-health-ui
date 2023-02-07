@@ -1,6 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
-import { StyleSheet, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { auth } from "../firebase";
 import { signInUser } from "../services/UserService";
 import {
@@ -11,24 +16,13 @@ import {
 } from "firebase/auth";
 
 // expo auth solution
-import {
-  ResponseType,
-  useAuthRequest,
-  makeRedirectUri,
-} from "expo-auth-session";
+import { ResponseType, useAuthRequest } from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
-
-  // github
-  const discovery = {
-    authorizationEndpoint: "https://github.com/login/oauth/authorize",
-    tokenEndpoint: "https://github.com/login/oauth/access_token",
-    revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.GITHUB_AUTH_CLIENT_ID}`,
-  };
 
   // google auth
   const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({
@@ -40,15 +34,6 @@ export default function Login({ navigation }) {
     responseType: ResponseType.Token,
     expoClientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
   });
-
-  const [rq, rs, ghPrompt] = useAuthRequest(
-    {
-      clientId: process.env.GITHUB_AUTH_CLIENT_ID,
-      scopes: ["identity"],
-      redirectUri: makeRedirectUri({ scheme: "your.app" }),
-    },
-    discovery
-  );
 
   useEffect(() => {
     // Sign in with Google
@@ -66,17 +51,13 @@ export default function Login({ navigation }) {
       signInWithCredential(auth, credential);
     }
 
-    if (rs?.type === "success") {
-      const { code } = rs.params;
-    }
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.navigate("Home");
       }
     });
     return unsubscribe;
-  }, [response, res, rs]);
+  }, [response, res]);
 
   const signIn = async () => {
     try {
@@ -121,15 +102,12 @@ export default function Login({ navigation }) {
           style={styles.socialButton}
           onPress={() => {}}
         />
-        <SocialButton
-          text='Continue with GitHub'
-          disabled={!rq}
-          imageSource={require("../assets/social/github.png")}
-          style={styles.socialButton}
-          onPress={() => {
-            ghPrompt();
-          }}
-        />
+        <TouchableOpacity
+          style={{ alignSelf: "flex-start" }}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
+          <Text style={{ color: "blue" }}>Forgotten your password?</Text>
+        </TouchableOpacity>
       </LoginScreen>
     </KeyboardAvoidingView>
   );

@@ -48,12 +48,6 @@ export default function Register({ navigation }) {
           style={styles.socialButton}
           onPress={() => {}}
         />
-        <SocialButton
-          text='Continue with GitHub'
-          imageSource={require("../assets/social/github.png")}
-          style={styles.socialButton}
-          onPress={() => {}}
-        />
       </LoginScreen>
     </KeyboardAvoidingView>
   );
