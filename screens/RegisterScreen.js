@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
-import { StyleSheet } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
+import { Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { auth } from "../firebase";
 import { signUpUser } from "../services/UserService";
 
@@ -25,7 +24,7 @@ export default function Register({ navigation }) {
         onSignupPress={() => {
           navigation.navigate("Login");
         }}
-        signupText='Login'
+        signupText='You already sign in? Login'
         loginButtonText='Sign Up'
         onEmailChange={(mail) => (email.current = mail)}
         onPasswordChange={(pass) => (password.current = pass)}
@@ -48,6 +47,12 @@ export default function Register({ navigation }) {
           style={styles.socialButton}
           onPress={() => {}}
         />
+        <TouchableOpacity
+          style={{ alignSelf: "flex-start" }}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
+          <Text style={{ color: "blue" }}>Forgotten your password?</Text>
+        </TouchableOpacity>
       </LoginScreen>
     </KeyboardAvoidingView>
   );

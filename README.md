@@ -113,4 +113,3 @@ User can sign in to application with:
 - `Google`
 - `Facebook`
 - `Apple`
-- `GitHub`

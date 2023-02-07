@@ -75,6 +75,7 @@ export default function Login({ navigation }) {
         onSignupPress={() => {
           navigation.navigate("Register");
         }}
+        signupText='You not a member? Register'
         onEmailChange={(mail) => (email.current = mail)}
         onPasswordChange={(pass) => (password.current = pass)}
         style={{ backgroundColor: "#fff" }}
