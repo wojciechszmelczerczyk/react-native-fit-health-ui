@@ -8,7 +8,7 @@ import HomeScreen from "./screens/HomeScreen";
 import UserScreen from "./screens/UserScreen";
 import { maybeCompleteAuthSession } from "expo-web-browser";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
-
+import CalendarScreen from "./screens/CalendarScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +53,13 @@ export default function App() {
             headerShown: false,
           }}
           component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          name='Calendar'
+          options={{
+            headerShown: false,
+          }}
+          component={CalendarScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

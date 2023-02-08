@@ -7,6 +7,7 @@ import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
 import DietScreen from "../screens/DietScreen";
+import CalendarScreen from "../screens/CalendarScreen";
 
 export const NavBottomBar = () => {
   const navigation = useNavigation();
@@ -123,6 +124,7 @@ export const NavBottomBar = () => {
           <CurvedBottomBar.Screen
             name='Diet'
             options={{
+              headerTitle: () => <CalendarScreen/>,
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Profile")}
