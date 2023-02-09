@@ -7,7 +7,7 @@ import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
 import DietScreen from "../screens/DietScreen";
-import CalendarScreen from "../screens/CalendarScreen";
+import DateHeader from "../components/DateHeader";
 
 export const NavBottomBar = () => {
   const navigation = useNavigation();
@@ -86,6 +86,18 @@ export const NavBottomBar = () => {
           <CurvedBottomBar.Screen
             name='Main'
             options={{
+              headerStyle: {
+                backgroundColor: "#eeee",
+              },
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                  <MaterialCommunityIcons
+                    name={"arrow-left"}
+                    size={30}
+                    style={{ marginLeft: 15, color: "#6432ff" }}
+                  />
+                </TouchableOpacity>
+              ),
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Profile")}
@@ -105,6 +117,19 @@ export const NavBottomBar = () => {
           <CurvedBottomBar.Screen
             name='Training'
             options={{
+              headerStyle: {
+                backgroundColor: "#eeee",
+              },
+              headerTitle: () => <DateHeader navigator={navigation} />,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                  <MaterialCommunityIcons
+                    name={"arrow-left"}
+                    size={30}
+                    style={{ marginLeft: 15, color: "#6432ff" }}
+                  />
+                </TouchableOpacity>
+              ),
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Profile")}
@@ -124,7 +149,19 @@ export const NavBottomBar = () => {
           <CurvedBottomBar.Screen
             name='Diet'
             options={{
-              headerTitle: () => <CalendarScreen/>,
+              headerStyle: {
+                backgroundColor: "#eeee",
+              },
+              headerTitle: () => <DateHeader navigator={navigation} />,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                  <MaterialCommunityIcons
+                    name={"arrow-left"}
+                    size={30}
+                    style={{ marginLeft: 15, color: "#6432ff" }}
+                  />
+                </TouchableOpacity>
+              ),
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Profile")}
@@ -149,6 +186,18 @@ export const NavBottomBar = () => {
           <CurvedBottomBar.Screen
             name='Chatbot'
             options={{
+              headerStyle: {
+                backgroundColor: "#eeee",
+              },
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                  <MaterialCommunityIcons
+                    name={"arrow-left"}
+                    size={30}
+                    style={{ marginLeft: 15, color: "#6432ff" }}
+                  />
+                </TouchableOpacity>
+              ),
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Profile")}

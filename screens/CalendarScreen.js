@@ -1,50 +1,43 @@
-import React, { useRef, useCallback } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import {
-  ExpandableCalendar,
-  CalendarProvider,
-  WeekCalendar,
-} from "react-native-calendars";
-import testIDs from "../testIDS";
-import { agendaItems, getMarkedDates } from "../agendaItems";
-import { getTheme, themeColor, lightThemeColor } from "../theme";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
+import { CalendarList } from "react-native-calendars";
+import { useNavigation } from "@react-navigation/native";
+import { DayNameContext } from "../context/DayNameContext";
+import { DayNumberContext } from "../context/DayNumberContext";
 
-const screenWidth = Dimensions.get("window").width;
+const CalendarScreen = () => {
+  const navigator = useNavigation();
 
-const leftArrowIcon = require("../assets/previous.png");
-const rightArrowIcon = require("../assets/next.png");
-const ITEMS = agendaItems;
+  const [, setDayName] = useContext(DayNameContext);
+  const [, setDayNumber] = useContext(DayNumberContext);
 
-const CalendarScreen = (props) => {
-  const { weekView } = props;
-  const marked = useRef(getMarkedDates());
-  const theme = useRef(getTheme());
-  const todayBtnTheme = useRef({
-    todayButtonTextColor: themeColor,
-  });
+  function getDayName(dateString) {
+    console.log(dateString);
+
+    const data = new Date(dateString).toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    const name = data.split(" ")[0];
+
+    const number = !data.split(" ")[2]
+      ? data.split(" ")[3]
+      : data.split(" ")[2];
+
+    setDayName(name);
+    setDayNumber(number);
+  }
 
   return (
-    <CalendarProvider date={ITEMS[1]?.title} theme={todayBtnTheme.current}>
-      {weekView ? (
-        <WeekCalendar
-          style={{ width: screenWidth }}
-          theme={theme.current}
-          markedDates={marked.current}
-          testID={testIDs.weekCalendar.CONTAINER}
-          firstDay={1}
-        />
-      ) : (
-        <ExpandableCalendar
-          theme={theme.current}
-          style={{ width: screenWidth }}
-          testID={testIDs.expandableCalendar.CONTAINER}
-          firstDay={1}
-          markedDates={marked.current}
-          leftArrowImageSource={leftArrowIcon}
-          rightArrowImageSource={rightArrowIcon}
-        />
-      )}
-    </CalendarProvider>
+    <CalendarList
+      onDayPress={({ dateString }) => {
+        getDayName(dateString);
+      }}
+      onDayLongPress={() => console.log("on long press")}
+    />
   );
 };
 
