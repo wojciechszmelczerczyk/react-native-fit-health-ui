@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { DayNameContext } from "../context/DayNameContext";
 import { DayNumberContext } from "../context/DayNumberContext";
@@ -9,7 +9,7 @@ const DateHeader = ({ navigator }) => {
   const [dayNumber, setDayNumber] = useContext(DayNumberContext);
 
   return (
-    <View>
+    <View style={{ backgroundColor: "transparent" }}>
       <TouchableOpacity onPress={() => navigator.navigate("Calendar")}>
         <Text style={{ fontSize: 15 }}>
           {dayName}, {dayNumber}

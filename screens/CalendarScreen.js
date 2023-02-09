@@ -33,6 +33,7 @@ const CalendarScreen = () => {
 
   return (
     <CalendarList
+      theme={{ todayTextColor: "#6432ff" }}
       onDayPress={({ dateString }) => {
         getDayName(dateString);
       }}
