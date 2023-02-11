@@ -1,23 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import React, { useRef } from "react";
 import { WeekCalendar, CalendarProvider } from "react-native-calendars";
 import testIDs from "../testIDs";
 import { agendaItems, getMarkedDates } from "../agendaItems";
-import { getTheme, themeColor } from "../theme";
+import TrainingView from "../components/TrainingView";
 
 const ITEMS = agendaItems;
 
-const TrainingScreen = (props) => {
-  const { weekView } = props;
-
+const TrainingScreen = () => {
   const marked = useRef(getMarkedDates());
-  const theme = useRef(getTheme());
-  const todayBtnTheme = useRef({
-    todayButtonTextColor: themeColor,
-  });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#eeee" }}>
+    <View style={{ flex: 1, backgroundColor: "#eee" }}>
       <CalendarProvider
         date={ITEMS[1]?.title}
         theme={{
@@ -32,16 +26,31 @@ const TrainingScreen = (props) => {
             calendarBackground: "transparent",
             todayTextColor: "#6432ff",
           }}
-          calendarHeight={100}
           testID={testIDs.weekCalendar.CONTAINER}
           firstDay={1}
           markedDates={marked.current}
         />
       </CalendarProvider>
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          minHeight: "100%",
+          alignItems: "center",
+        }}
+        style={styles.scrollExerciseContainer}
+      >
+        {[1,1,1,1,5].map((_, i) => (
+          <TrainingView space={i} />
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 export default TrainingScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  scrollExerciseContainer: {
+    flexGrow: 6,
+  },
+});

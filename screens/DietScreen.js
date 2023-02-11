@@ -28,7 +28,7 @@ const chartConfig = {
   backgroundColor: "#e26a00",
   backgroundGradientFrom: "white",
   backgroundGradientTo: "white",
-  color: (opacity = 1) => `rgba(100, 50, 255, ${opacity})`,
+  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   strokeWidth: 2,
   barPercentage: 0.5,
   useShadowColorFromDataset: false,
@@ -128,6 +128,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
   const data = {
     labels: ["Protein", "Carbs", "Fat"],
     data: [nutrition.protein, nutrition.carbs, nutrition.fat],
+    colors: ["#D7A9E3FF", "#8BBEE8FF", "#A8D5BAFF"],
   };
 
   return (
@@ -149,6 +150,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
       <SafeAreaView style={styles.container}>
         <View contentContainerStyle={styles.scrollView}>
           <ProgressChart
+            withCustomBarColorFromData
             style={styles.progressChart}
             data={data}
             width={screenWidth - 25}
@@ -156,7 +158,6 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
             strokeWidth={14}
             radius={32}
             chartConfig={chartConfig}
-            hideLegend={false}
           />
           <View style={{ ...styles.dishContainer, minHeight: dishAreaHeight }}>
             {dishArray.map((dish, i) => (

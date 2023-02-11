@@ -36,7 +36,7 @@ export const NavBottomBar = () => {
       <MaterialCommunityIcons
         name={icon}
         size={25}
-        color={routeName === selectedTab ? "#9432ff" : "#6432ff"}
+        color={routeName === selectedTab ? "#6432ff" : "lightgray"}
       />
     );
   };
@@ -94,7 +94,7 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"arrow-left"}
                     size={30}
-                    style={{ marginLeft: 15, color: "#6432ff" }}
+                    style={{ marginLeft: 15 }}
                   />
                 </TouchableOpacity>
               ),
@@ -126,7 +126,7 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"arrow-left"}
                     size={30}
-                    style={{ marginLeft: 15, color: "#6432ff" }}
+                    style={{ marginLeft: 15 }}
                   />
                 </TouchableOpacity>
               ),
@@ -158,7 +158,7 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"arrow-left"}
                     size={30}
-                    style={{ marginLeft: 15, color: "#6432ff" }}
+                    style={{ marginLeft: 15 }}
                   />
                 </TouchableOpacity>
               ),
@@ -194,7 +194,7 @@ export const NavBottomBar = () => {
                   <MaterialCommunityIcons
                     name={"arrow-left"}
                     size={30}
-                    style={{ marginLeft: 15, color: "#6432ff" }}
+                    style={{ marginLeft: 15 }}
                   />
                 </TouchableOpacity>
               ),
