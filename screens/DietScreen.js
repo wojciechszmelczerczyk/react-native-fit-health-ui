@@ -7,6 +7,7 @@ import {
   Dimensions,
   Modal,
   AsyncStorage,
+  Image
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { ProgressChart } from "react-native-chart-kit";
@@ -51,7 +52,47 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
   const [dishes, setDishes] = useState([]);
 
   // dish submitted from modal
-  const [chosenDishes, setChosenDishes] = useState([]);
+  const [chosenDishes, setChosenDishes] = useState([
+    {
+      label: "Chicken",
+      value: "Chicken",
+      containerStyle: {
+        height: 75,
+      },
+      icon: () => (
+        <Image
+          source={require("../assets/social/apple.png")}
+          style={styles.iconStyle}
+        />
+      ),
+    },
+    {
+      label: "Apple",
+      value: "Apple",
+      containerStyle: {
+        height: 75,
+      },
+      icon: () => (
+        <Image
+          source={require("../assets/social/facebook.png")}
+          style={styles.iconStyle}
+        />
+      ),
+    },
+    {
+      label: "Apple",
+      value: "Apple",
+      containerStyle: {
+        height: 75,
+      },
+      icon: () => (
+        <Image
+          source={require("../assets/social/google.png")}
+          style={styles.iconStyle}
+        />
+      ),
+    },
+  ]);
 
   // protein, carbs and fat information of submitted dish
   const [nutrition, setNutrition] = useState({
@@ -347,12 +388,13 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   dishDropdown: {
+    minHeight: 75,
     maxHeight: 150,
     width: 360,
     flex: 1,
     borderColor: "transparent",
     borderRadius: 30,
-    marginBottom: 65,
+    marginBottom: 80,
   },
   separator: {
     backgroundColor: "#ddd",
