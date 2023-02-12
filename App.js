@@ -18,8 +18,21 @@ LogBox.ignoreAllLogs();
 maybeCompleteAuthSession();
 
 export default function App() {
-  const [dayName, setDayName] = React.useState(false);
-  const [dayNumber, setDayNumber] = React.useState(false);
+  // get default
+
+  const data = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const name = data.split(" ")[0];
+
+  const number = !data.split(" ")[2] ? data.split(" ")[3] : data.split(" ")[2];
+
+  const [dayName, setDayName] = React.useState(name);
+  const [dayNumber, setDayNumber] = React.useState(number);
 
   return (
     <DayNameContext.Provider value={[dayName, setDayName]}>
