@@ -1,15 +1,13 @@
 import {} from "react-native";
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DishDetailsScreen from "./DishDetailsScreen";
 import DishMainScreen from "./DishMainScreen";
 
 const Stack = createNativeStackNavigator();
 
-const DietScreen = ({ modalVisible, setModalVisible }) => {
+const DishScreen = ({ modalVisible, setModalVisible }) => {
   return (
-    // <NavigationContainer initialState='DishMain' independent={true}>
     <Stack.Navigator initialRouteName='DishMain'>
       <Stack.Screen
         name='DishMain'
@@ -30,8 +28,7 @@ const DietScreen = ({ modalVisible, setModalVisible }) => {
         component={DishDetailsScreen}
       />
     </Stack.Navigator>
-    // </NavigationContainer>
   );
 };
 
-export default DietScreen;
+export default DishScreen;

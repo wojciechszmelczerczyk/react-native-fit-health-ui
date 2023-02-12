@@ -6,7 +6,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
-import DietScreen from "../screens/DietScreen";
+import DishScreen from "../screens/DishScreen";
 import DateHeader from "../components/DateHeader";
 
 export const NavBottomBar = () => {
@@ -177,7 +177,7 @@ export const NavBottomBar = () => {
             }}
             position='RIGHT'
             component={() => (
-              <DietScreen
+              <DishScreen
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
               />
