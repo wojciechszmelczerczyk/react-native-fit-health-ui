@@ -97,6 +97,7 @@ npm start
 ## Architecture
 
 Client side architecture use `firebase authentication` to signin user.
+
 Client communicate with third party API's. Client architecture style is `REST`.
 
 <details>
