@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import LoginScreen, { SocialButton } from "react-native-login-screen";
 import {
   StyleSheet,
@@ -20,10 +20,12 @@ import {
 import { ResponseType } from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
+import { UserContext } from "../context/UserContext";
 
 export default function Login({ navigation }) {
   const email = useRef(null);
   const password = useRef(null);
+  const [, setUser] = useContext(UserContext);
 
   // google auth
   const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({
@@ -54,6 +56,7 @@ export default function Login({ navigation }) {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        setUser(user);
         navigation.navigate("Home");
       }
     });
