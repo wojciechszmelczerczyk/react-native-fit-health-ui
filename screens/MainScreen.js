@@ -48,7 +48,7 @@ const MainScreen = () => {
               alignSelf: "flex-start",
             }}
           >
-            Popular Exercises
+            My plan
           </Text>
           <View
             style={{
@@ -58,9 +58,10 @@ const MainScreen = () => {
               width: 90,
               alignItems: "center",
               justifyContent: "center",
+              marginLeft: 20,
             }}
           >
-            <Text style={{ color: "white" }}>View All</Text>
+            <Text style={{ color: "white" }}>Get Details</Text>
           </View>
         </View>
         <SwiperFlatList
