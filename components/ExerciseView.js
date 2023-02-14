@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import EntypoCommunityIcons from "react-native-vector-icons/Entypo";
 
-const ExerciseView = () => {
+const ExerciseView = ({ item }) => {
   return (
     <View
       style={{
@@ -37,7 +37,7 @@ const ExerciseView = () => {
         }}
       >
         <Text style={{ color: "white", fontSize: 20 }}>Chest press</Text>
-        <Text style={{ color: "white" }}>15 workout videos for you</Text>
+        <Text style={{ color: "white" }}>{item} workout videos for you</Text>
         {/* play button and exercise time subsection */}
         <View
           style={{
@@ -71,7 +71,7 @@ const ExerciseView = () => {
       </View>
       <Image
         style={{ position: "absolute", top: -70 }}
-        source={require("../assets/exercises/press.png")}
+        source={require("../assets/exercises/standing.png")}
       />
     </View>
   );

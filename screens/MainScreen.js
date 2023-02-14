@@ -2,9 +2,13 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import ExerciseView from "../components/ExerciseView";
+import ExerciseElement from "../components/ExerciseElement";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 const MainScreen = () => {
   const [user] = useContext(UserContext);
+
+  const x = [1, 2, 3];
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
@@ -35,9 +39,44 @@ const MainScreen = () => {
           {"Get ready to work!"}
         </Text>
       </View>
-      {/* <ScrollView horizontal={true}> */}
-        <ExerciseView />
-      {/* </ScrollView> */}
+      <ExerciseView />
+      <View style={{ flex: 1, alignItems: "flex-start" }}>
+        <View style={{ flex: 1, flexDirection: "row", marginTop: 30 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              alignSelf: "flex-start",
+            }}
+          >
+            Popular Exercises
+          </Text>
+          <View
+            style={{
+              backgroundColor: "#8BBEE8FF",
+              borderRadius: 20,
+              height: 35,
+              width: 90,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ color: "white" }}>View All</Text>
+          </View>
+        </View>
+        <SwiperFlatList
+          style={{
+            marginTop: -35,
+            width: 350,
+            overflow: "hidden",
+          }}
+          data={x}
+          autoplay
+          autoplayDelay={2}
+          autoplayLoop
+          index={2}
+          renderItem={({ item }) => <ExerciseElement item={item} />}
+        />
+      </View>
     </View>
   );
 };
