@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import ExerciseView from "../components/ExerciseView";
 
 const MainScreen = () => {
   const [user] = useContext(UserContext);
@@ -34,48 +35,10 @@ const MainScreen = () => {
           {"Get ready to work!"}
         </Text>
       </View>
-      {/* <View style={{ flexGrow: 2, justifyContent:"center" }}> */}
-      <View
-        style={{
-          backgroundColor: "#8BBEE8FF",
-          borderRadius: 20,
-          flexBasis: 225,
-          width: 350,
-          alignItems: "flex-end",
-        }}
-      >
-        <View
-          style={{
-            alignSelf: "flex-start",
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            borderRadius: 20,
-            height: 40,
-            width: 100,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 45,
-            marginLeft: 45,
-          }}
-        >
-          <Text style={{ color: "white" }}>Entry Level</Text>
-        </View>
-        <View
-          style={{
-            alignSelf: "flex-start",
-            alignItems: "center",
-            marginLeft: 50,
-            marginTop: 10,
-          }}
-        >
-          <Text style={{ color: "white" }}>Chest press</Text>
-        </View>
-        <Image
-          style={{ position: "absolute", top: -70 }}
-          source={require("../assets/exercises/press.png")}
-        />
-      </View>
+      {/* <ScrollView horizontal={true}> */}
+        <ExerciseView />
+      {/* </ScrollView> */}
     </View>
-    // </View>
   );
 };
 
