@@ -2,7 +2,11 @@
 
 ## Description
 
-User interface for application.
+User interface for [Fitness app](https://github.com/wojciechszmelczerczyk/fit-health-app).
+
+## App status
+
+Not Finished [❌]
 
 ## Table of Contents
 
