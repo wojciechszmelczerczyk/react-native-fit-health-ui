@@ -7,11 +7,31 @@ import { UserContext } from "../context/UserContext";
 const ChatbotScreen = () => {
   const [user] = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const id = useRef(1);
 
-  const handleInput = async (text) => {
-    const chatBotRes = await getAnswer(text);
+  const Chatbot = {
+    _id: id.current,
+    text: "",
+    createdAt: new Date(),
+    user: {
+      _id: 1,
+      name: "Fitness ChatBot",
+      avatar: "https://cdn-icons-png.flaticon.com/512/1058/1058435.png",
+    },
+  };
 
-    // TODO: make chatbot response appear in messages
+  const handleInput = (text) => {
+    setTimeout(async () => {
+      setIsTyping(false);
+      // TODO: make chatbot response appear in messages
+      const chatBotRes = await getAnswer(text);
+      Chatbot._id = ++id.current;
+      Chatbot.text = chatBotRes.data;
+      onSend(Chatbot);
+    }, 3000);
+
+    setIsTyping(true);
   };
 
   useEffect(() => {
@@ -23,7 +43,7 @@ const ChatbotScreen = () => {
         user: {
           _id: 1,
           name: "Fitness ChatBot",
-          avatar: "",
+          avatar: "https://cdn-icons-png.flaticon.com/512/1058/1058435.png",
         },
       },
     ]);
@@ -39,6 +59,7 @@ const ChatbotScreen = () => {
   return (
     <View style={{ flex: 1, marginBottom: 55 }}>
       <GiftedChat
+        isTyping={isTyping}
         messages={messages}
         onSend={async (messages) => {
           // call function
