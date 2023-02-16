@@ -15,6 +15,7 @@ Not Finished [❌]
 - [To run](#to-run)
 - [Architecture](#architecture)
 - [Authentication](#authentication)
+- [Attribution](#attribution)
 
 ## Techstack
 
@@ -118,3 +119,9 @@ User can sign in to application with:
 - `Google`
 - `Facebook`
 - `Apple`
+
+## Attribution
+
+<a href="https://www.flaticon.com/free-icons/android" title="android icons">Android icons created by Freepik - Flaticon</a>
+
+<a href="https://www.freepik.com/free-vector/set-man-doing-excercise_4767465.htm#page=2&query=fitness%20svg&position=31&from_view=keyword&track=ais">Image by grmarc</a> on Freepik
