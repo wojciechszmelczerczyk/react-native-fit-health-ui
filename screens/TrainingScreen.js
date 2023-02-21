@@ -1,56 +1,34 @@
-import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
-import React, { useRef } from "react";
-import { WeekCalendar, CalendarProvider } from "react-native-calendars";
-import testIDs from "../testIDs";
-import { agendaItems, getMarkedDates } from "../agendaItems";
-import TrainingView from "../components/TrainingView";
+import {} from "react-native";
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TrainingMainScreen from "./TrainingMainScreen";
+import TrainingDetailsScreen from "./TrainingDetailsScreen";
 
-const ITEMS = agendaItems;
+const Stack = createNativeStackNavigator();
 
-const TrainingScreen = () => {
-  const marked = useRef(getMarkedDates());
-
+const TrainingScreen = ({ modalVisible, setModalVisible }) => {
   return (
-    <View style={{ flex: 1, backgroundColor: "#eee" }}>
-      <CalendarProvider
-        date={ITEMS[1]?.title}
-        theme={{
-          backgroundColor: "#eeee",
+    <Stack.Navigator initialRouteName='DishMain'>
+      <Stack.Screen
+        name='TrainingMain'
+        options={{
+          headerShown: false,
         }}
-      >
-        <WeekCalendar
-          theme={{
-            selectedDayBackgroundColor: "#6432ff",
-            dotColor: "#6432ff",
-            dotStyle: { marginTop: -2 },
-            calendarBackground: "transparent",
-            todayTextColor: "#6432ff",
-          }}
-          testID={testIDs.weekCalendar.CONTAINER}
-          firstDay={1}
-          markedDates={marked.current}
-        />
-      </CalendarProvider>
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          minHeight: "100%",
-          alignItems: "center",
+        component={TrainingMainScreen}
+        initialParams={{
+          modalVisible: modalVisible,
+          setModalVisible: setModalVisible,
         }}
-        style={styles.scrollExerciseContainer}
-      >
-        {[1,1,1,1,5].map((_, i) => (
-          <TrainingView space={i} />
-        ))}
-      </ScrollView>
-    </View>
+      />
+      <Stack.Screen
+        name='TrainingDetails'
+        options={{
+          headerShown: false,
+        }}
+        component={TrainingDetailsScreen}
+      />
+    </Stack.Navigator>
   );
 };
 
 export default TrainingScreen;
-
-const styles = StyleSheet.create({
-  scrollExerciseContainer: {
-    flexGrow: 6,
-  },
-});

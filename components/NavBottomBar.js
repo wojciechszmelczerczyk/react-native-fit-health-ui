@@ -143,7 +143,12 @@ export const NavBottomBar = () => {
               ),
               headerTitleAlign: "center",
             }}
-            component={TrainingScreen}
+            component={() => (
+              <TrainingScreen
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+              />
+            )}
             position='LEFT'
           />
           <CurvedBottomBar.Screen

@@ -17,6 +17,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { getDish } from "../services/DietService";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import _ from "lodash";
+import ModalView from "../components/ModalView";
 
 // get screen width
 const screenWidth = Dimensions.get("window").width;
@@ -262,62 +263,25 @@ const DishMainScreen = ({ route, navigation }) => {
               />
             ))}
           </View>
-          <Modal
-            animationType='slide'
-            transparent={true}
-            visible={modalVisible}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Add dish!</Text>
-                <DropDownPicker
-                  items={dishes}
-                  zIndex={2000}
-                  zIndexInverse={1000}
-                  value={valueSearch}
-                  searchable={true}
-                  onChangeSearchText={(text) => onChangeSearchValue(text)}
-                  setValue={(value) => setValueSearch(value)}
-                  loading={loading}
-                  itemKey={dishArray}
-                  itemSeparator={true}
-                  itemSeparatorStyle={styles.separator}
-                  dropDownDirection={"BOTTOM"}
-                  placeholder={"Search dish by ingredient"}
-                  open={openOptionsSearch}
-                  onOpen={onOpenOptionsSearch}
-                  setOpen={setOpenOptionsSearch}
-                />
-                <DropDownPicker
-                  items={dishArray}
-                  zIndex={1000}
-                  zIndexInverse={2000}
-                  value={value}
-                  itemSeparator={true}
-                  itemSeparatorStyle={styles.separator}
-                  setValue={setValue}
-                  itemKey={dishArray}
-                  dropDownDirection={"BOTTOM"}
-                  placeholder={"Choose dish"}
-                  open={openOptions}
-                  onOpen={onOpenOptions}
-                  setOpen={setOpenOptions}
-                />
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={submitModal}
-                >
-                  <Text style={styles.textStyle}>Submit dish</Text>
-                </Pressable>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Cancel</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal>
+          <ModalView
+            setModalVisible={setModalVisible}
+            modalVisible={modalVisible}
+            loading={loading}
+            dishes={dishes}
+            value={value}
+            setValue={setValue}
+            submitModal={submitModal}
+            onChangeSearchValue={onChangeSearchValue}
+            valueSearch={valueSearch}
+            setValueSearch={setValueSearch}
+            dishArray={dishArray}
+            openOptionsSearch={openOptionsSearch}
+            onOpenOptionsSearch={onOpenOptionsSearch}
+            setOpenOptionsSearch={setOpenOptionsSearch}
+            openOptions={openOptions}
+            onOpenOptions={onOpenOptions}
+            setOpenOptions={setOpenOptions}
+          />
         </View>
       </SafeAreaView>
     </>
