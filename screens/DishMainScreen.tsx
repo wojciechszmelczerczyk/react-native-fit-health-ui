@@ -113,7 +113,7 @@ const DishMainScreen = ({ route, navigation }: any) => {
   const onOpenOptions = useCallback(() => setOpenOptionsSearch(false), []);
   const onOpenOptionsSearch = useCallback(() => setOpenOptions(false), []);
 
-  // when on of dropdown from diet page is opened, remaining are being closen
+  // when on of dropdown from diet page is opened, remaining are being close
   const onOpenBreakfast = useCallback(() => {
     setOpenLunch(false);
     setOpenDinner(false);

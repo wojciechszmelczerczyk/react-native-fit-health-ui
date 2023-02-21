@@ -9,6 +9,7 @@ import UserScreen from "./screens/UserScreen";
 import { maybeCompleteAuthSession } from "expo-web-browser";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import CalendarScreen from "./screens/CalendarScreen";
+import StartUserInfoScreen from "./screens/StartUserInfoScreen";
 import { DayNameContext } from "./context/DayNameContext";
 import { DayNumberContext } from "./context/DayNumberContext";
 import { UserContext } from "./context/UserContext";
@@ -41,7 +42,7 @@ export default function App() {
       <DayNameContext.Provider value={[dayName, setDayName]}>
         <DayNumberContext.Provider value={[dayNumber, setDayNumber]}>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName='Login'>
+            <Stack.Navigator initialRouteName='StartUserInfo'>
               <Stack.Screen
                 name='Login'
                 options={{
@@ -83,6 +84,13 @@ export default function App() {
                   headerShown: false,
                 }}
                 component={CalendarScreen}
+              />
+              <Stack.Screen
+                name='StartUserInfo'
+                options={{
+                  headerShown: false,
+                }}
+                component={StartUserInfoScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

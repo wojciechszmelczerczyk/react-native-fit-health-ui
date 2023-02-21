@@ -66,7 +66,7 @@ export default function Login({ navigation }: any) {
   const signIn = async () => {
     try {
       const res = await signInUser(auth, email.current, password.current);
-      if (res.user) navigation.navigate("Home");
+      if (res.user) navigation.navigate("StartUserInfo");
     } catch (err) {}
   };
 
