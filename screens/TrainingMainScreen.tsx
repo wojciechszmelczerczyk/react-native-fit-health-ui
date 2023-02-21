@@ -9,7 +9,7 @@ import ModalView from "../components/ModalView";
 
 const ITEMS = agendaItems;
 
-const TrainingScreen = ({ route, navigation }) => {
+const TrainingScreen = ({ route, navigation }: any) => {
   const marked = useRef(getMarkedDates());
 
   const { modalVisible, setModalVisible } = route.params;
@@ -34,7 +34,7 @@ const TrainingScreen = ({ route, navigation }) => {
           }}
           testID={testIDs.weekCalendar.CONTAINER}
           firstDay={1}
-          markedDates={marked.current}
+          markedDates={marked.current as any}
         />
       </CalendarProvider>
       <ScrollView
@@ -49,10 +49,10 @@ const TrainingScreen = ({ route, navigation }) => {
           <TrainingView space={i} navigation={navigation} />
         ))}
       </ScrollView>
-      <ModalView
+      {/* <ModalView
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-      />
+      /> */}
     </View>
   );
 };

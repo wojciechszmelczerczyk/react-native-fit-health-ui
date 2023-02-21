@@ -21,20 +21,20 @@ import { ResponseType } from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
 
-export default function Register({ navigation }) {
-  const email = useRef(null);
-  const password = useRef(null);
+export default function Register({ navigation }: any) {
+  const email = useRef(null) as any;
+  const password = useRef(null) as any;
 
   // google auth
   const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({
     expoClientId: process.env.GOOGLE_AUTH_CLIENT_ID,
-  });
+  } as any);
 
   // facebook auth
   const [req, res, fbPrompt] = Facebook.useAuthRequest({
     responseType: ResponseType.Token,
     expoClientId: process.env.FACEBOOK_AUTH_CLIENT_ID,
-  });
+  } as any);
 
   useEffect(() => {
     // Sign in with Google

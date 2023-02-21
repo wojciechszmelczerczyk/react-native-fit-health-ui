@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const DishDetailsScreen = ({ route, navigation }) => {
-  const { value } = route.params;
+const TrainingDetailsScreen = ({ route, navigation }: any) => {
+  // const { value } = route.params;
 
   return (
     <View>
-      <Text>DishDetailsScreen</Text>
-      <Text>{value}</Text>
+      <Text>TrainingDetailsScreen</Text>
+      {/* <Text>{value}</Text> */}
       <TouchableOpacity
         style={{ backgroundColor: "red" }}
         onPress={() => navigation.goBack()}
@@ -18,6 +18,6 @@ const DishDetailsScreen = ({ route, navigation }) => {
   );
 };
 
-export default DishDetailsScreen;
+export default TrainingDetailsScreen;
 
 const styles = StyleSheet.create({});

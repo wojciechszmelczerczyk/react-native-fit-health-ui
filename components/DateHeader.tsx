@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { DayNameContext } from "../context/DayNameContext";
 import { DayNumberContext } from "../context/DayNumberContext";
 
-const DateHeader = ({ navigator }) => {
+const DateHeader = ({ navigator }: any) => {
   const [dayName, setDayName] = useContext(DayNameContext);
   const [dayNumber, setDayNumber] = useContext(DayNumberContext);
 

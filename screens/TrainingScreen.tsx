@@ -6,7 +6,7 @@ import TrainingDetailsScreen from "./TrainingDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
-const TrainingScreen = ({ modalVisible, setModalVisible }) => {
+const TrainingScreen = ({ modalVisible, setModalVisible }: any) => {
   return (
     <Stack.Navigator initialRouteName='DishMain'>
       <Stack.Screen

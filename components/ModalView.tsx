@@ -21,7 +21,7 @@ export default function ModalView({
   openOptions,
   onOpenOptions,
   setOpenOptions,
-}) {
+}: any) {
   return (
     <View>
       <Modal animationType='slide' transparent={true} visible={modalVisible}>
@@ -80,4 +80,53 @@ export default function ModalView({
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    minHeight: "75%",
+    minWidth: "90%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    marginTop: 20,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+
+  separator: {
+    backgroundColor: "#ddd",
+    width: "95%",
+    marginLeft: 6,
+  },
+});

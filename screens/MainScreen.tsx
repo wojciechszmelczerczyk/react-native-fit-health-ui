@@ -6,7 +6,7 @@ import ExerciseElement from "../components/ExerciseElement";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 const MainScreen = () => {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) as any;
 
   const x = [1, 2, 3];
 
@@ -39,7 +39,7 @@ const MainScreen = () => {
           {"Get ready to work!"}
         </Text>
       </View>
-      <ExerciseView />
+      <ExerciseView item={5} />
       <View style={{ flex: 1, alignItems: "flex-start" }}>
         <View style={{ flex: 1, flexDirection: "row", marginTop: 30 }}>
           <Text
@@ -75,7 +75,7 @@ const MainScreen = () => {
           autoplayDelay={2}
           autoplayLoop
           index={2}
-          renderItem={({ item }) => <ExerciseElement item={item} />}
+          renderItem={({ item }) => <ExerciseElement />}
         />
       </View>
     </View>

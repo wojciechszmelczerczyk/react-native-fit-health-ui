@@ -22,10 +22,10 @@ import * as Google from "expo-auth-session/providers/google";
 import * as Facebook from "expo-auth-session/providers/facebook";
 import { UserContext } from "../context/UserContext";
 
-export default function Login({ navigation }) {
-  const email = useRef(null);
-  const password = useRef(null);
-  const [, setUser] = useContext(UserContext);
+export default function Login({ navigation }: any) {
+  const email = useRef(null) as any;
+  const password = useRef(null) as any;
+  const [, setUser] = useContext(UserContext) as any;
 
   // google auth
   const [request, response, googlePrompt] = Google.useIdTokenAuthRequest({

@@ -8,10 +8,10 @@ import { DayNumberContext } from "../context/DayNumberContext";
 const CalendarScreen = () => {
   const navigator = useNavigation();
 
-  const [, setDayName] = useContext(DayNameContext);
-  const [, setDayNumber] = useContext(DayNumberContext);
+  const [, setDayName] = useContext(DayNameContext) as any;
+  const [, setDayNumber] = useContext(DayNumberContext) as any;
 
-  function getDayName(dateString) {
+  function getDayName(dateString: any) {
     console.log(dateString);
 
     const data = new Date(dateString).toLocaleString("en-US", {

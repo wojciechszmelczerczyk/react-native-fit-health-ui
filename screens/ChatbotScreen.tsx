@@ -5,9 +5,9 @@ import { getAnswer } from "../services/ChatbotService";
 import { GiftedChat } from "react-native-gifted-chat";
 import { UserContext } from "../context/UserContext";
 const ChatbotScreen = () => {
-  const [user] = useContext(UserContext);
-  const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [user] = useContext(UserContext) as any;
+  const [messages, setMessages] = useState([]) as any;
+  const [isTyping, setIsTyping] = useState(false) as any;
   const id = useRef(1);
 
   const Chatbot = {
@@ -21,14 +21,14 @@ const ChatbotScreen = () => {
     },
   };
 
-  const handleInput = (text) => {
+  const handleInput = (text: any) => {
     setTimeout(async () => {
       setIsTyping(false);
       // TODO: make chatbot response appear in messages
       const chatBotRes = await getAnswer(text);
       Chatbot._id = ++id.current;
       Chatbot.text = chatBotRes.data;
-      onSend(Chatbot);
+      onSend(Chatbot as any);
     }, 3000);
 
     setIsTyping(true);
@@ -51,7 +51,7 @@ const ChatbotScreen = () => {
 
   // const prompt = useRef(null);
   const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
+    setMessages((previousMessages: any) =>
       GiftedChat.append(previousMessages, messages)
     );
   }, []);
@@ -61,7 +61,7 @@ const ChatbotScreen = () => {
       <GiftedChat
         isTyping={isTyping}
         messages={messages}
-        onSend={async (messages) => {
+        onSend={async (messages: any) => {
           // call function
           onSend(messages);
 

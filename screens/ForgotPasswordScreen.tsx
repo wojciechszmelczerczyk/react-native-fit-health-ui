@@ -12,7 +12,7 @@ import { resetPassword } from "../services/UserService";
 import { auth } from "../firebase";
 
 const ForgotPasswordScreen = () => {
-  const email = useRef(null);
+  const email = useRef(null) as any;
   const error = useRef(null);
 
   const config = {
@@ -24,7 +24,7 @@ const ForgotPasswordScreen = () => {
     try {
       await resetPassword(auth, email.current);
       Alert.alert(`Password reset email send to ${email.current}`);
-    } catch (err) {
+    } catch (err: any) {
       error.current = err.code;
     }
   };
@@ -63,7 +63,7 @@ const ForgotPasswordScreen = () => {
         disableSocialButtons
         disablePasswordInput
         disableSignup
-      ></LoginScreen>
+      ></LoginScreen> 
     </KeyboardAvoidingView>
   );
 };

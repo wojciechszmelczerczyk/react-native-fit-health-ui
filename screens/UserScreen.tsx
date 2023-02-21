@@ -5,9 +5,9 @@ import { auth } from "../firebase";
 import { DayNameContext } from "../context/DayNameContext";
 import { DayNumberContext } from "../context/DayNumberContext";
 
-const UserScreen = ({ navigation }) => {
-  const [, setDayName] = useContext(DayNameContext);
-  const [, setDayNumber] = useContext(DayNumberContext);
+const UserScreen = ({ navigation }: any) => {
+  const [, setDayName] = useContext(DayNameContext) as any;
+  const [, setDayNumber] = useContext(DayNumberContext) as any;
 
   const signOutUser = async () => {
     try {

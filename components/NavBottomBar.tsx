@@ -7,14 +7,14 @@ import MainScreen from "../screens/MainScreen";
 import TrainingScreen from "../screens/TrainingScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
 import DishScreen from "../screens/DishScreen";
-import DateHeader from "../components/DateHeader";
+import DateHeader from "./DateHeader";
 
 export const NavBottomBar = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation() as any;
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const _renderIcon = (routeName, selectedTab) => {
+  const _renderIcon = (routeName: any, selectedTab: any) => {
     let icon = "";
 
     switch (routeName) {
@@ -40,7 +40,7 @@ export const NavBottomBar = () => {
       />
     );
   };
-  const renderTabBar = ({ routeName, selectedTab, navigate }) => {
+  const renderTabBar = ({ routeName, selectedTab, navigate }: any) => {
     return (
       <TouchableOpacity
         onPress={() => navigate(routeName)}
@@ -59,6 +59,7 @@ export const NavBottomBar = () => {
     <View style={styles.container}>
       <NavigationContainer independent={true}>
         <CurvedBottomBar.Navigator
+          defaultScreenOptions={""} // just experimenting
           type='UP'
           style={styles.bottomBar}
           strokeWidth={0.5}
@@ -122,7 +123,7 @@ export const NavBottomBar = () => {
               },
               headerTitle: () => <DateHeader navigator={navigation} />,
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                   <MaterialCommunityIcons
                     name={"arrow-left"}
                     size={30}

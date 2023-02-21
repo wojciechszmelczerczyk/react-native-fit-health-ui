@@ -18,6 +18,7 @@ import { getDish } from "../services/DietService";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import _ from "lodash";
 import ModalView from "../components/ModalView";
+import WaterIntakeView from "../components/WaterIntakeView";
 
 // get screen width
 const screenWidth = Dimensions.get("window").width;
@@ -36,7 +37,7 @@ const chartConfig = {
   useShadowColorFromDataset: false,
 };
 
-const DishMainScreen = ({ route, navigation }) => {
+const DishMainScreen = ({ route, navigation }: any) => {
   const { modalVisible, setModalVisible } = route.params;
 
   // boolean condition, when dropdown from diet page is open/close
@@ -128,7 +129,7 @@ const DishMainScreen = ({ route, navigation }) => {
   }, []);
 
   // when text from search located in modal change, fetch dish base on input text
-  const onChangeSearchValue = async (text) => {
+  const onChangeSearchValue = async (text: any) => {
     // on load spinner
     setLoading(true);
 
@@ -136,10 +137,10 @@ const DishMainScreen = ({ route, navigation }) => {
     const { data } = await getDish(text);
 
     // get dishes labels only
-    const dishLabels = data.hits.map((dish) => dish.recipe.label);
+    const dishLabels = data.hits.map((dish: any) => dish.recipe.label);
 
     // format dish labels array to {label, value} format
-    const formattedDishLabels = dishLabels.map((label) => {
+    const formattedDishLabels = dishLabels.map((label: any) => {
       return { label, value: label.toLowerCase() };
     });
 
@@ -159,7 +160,7 @@ const DishMainScreen = ({ route, navigation }) => {
     chosenDishes.push({
       label: chosenDish.data.hits[0].recipe.label,
       value: chosenDish.data.hits[0].recipe.label.toLowerCase(),
-    });
+    } as any);
 
     // set state with chosen dishes
     // setChosenDishes(chosenDishes);
@@ -203,6 +204,7 @@ const DishMainScreen = ({ route, navigation }) => {
             radius={32}
             chartConfig={chartConfig}
           />
+          <WaterIntakeView />
           <View style={{ ...styles.dishContainer, minHeight: dishAreaHeight }}>
             {dishArray.map((dish, i) => (
               <DropDownPicker

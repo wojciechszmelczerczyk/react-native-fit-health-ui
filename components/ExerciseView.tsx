@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import EntypoCommunityIcons from "react-native-vector-icons/Entypo";
 
-const ExerciseView = ({ item }) => {
+const ExerciseView = ({ item }: any) => {
   return (
     <View
       style={{
