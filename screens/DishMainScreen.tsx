@@ -8,6 +8,7 @@ import {
   Modal,
   AsyncStorage,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { ProgressChart } from "react-native-chart-kit";
@@ -192,100 +193,104 @@ const DishMainScreen = ({ route, navigation }: any) => {
       ) : (
         ""
       )}
-      <SafeAreaView style={styles.container}>
-        <View contentContainerStyle={styles.scrollView}>
-          <ProgressChart
-            withCustomBarColorFromData
-            style={styles.progressChart}
-            data={data}
-            width={screenWidth - 25}
-            height={220}
-            strokeWidth={14}
-            radius={32}
-            chartConfig={chartConfig}
-          />
-          <WaterIntakeView />
-          <View style={{ ...styles.dishContainer, minHeight: dishAreaHeight }}>
-            {dishArray.map((dish, i) => (
-              <DropDownPicker
-                key={i}
-                open={
-                  dish.label === "Breakfast"
-                    ? openBreakfast
-                    : dish.label === "Lunch"
-                    ? openLunch
-                    : openDinner
-                }
-                onOpen={
-                  dish.label === "Breakfast"
-                    ? onOpenBreakfast
-                    : dish.label === "Lunch"
-                    ? onOpenLunch
-                    : onOpenDinner
-                }
-                listMode={"SCROLLVIEW"}
-                dropDownContainerStyle={styles.dishDropdown}
-                dropDownDirection={"BOTTOM"}
-                placeholder={`${dish.label}: ${0} kcal`}
-                disabled={chosenDishes.length ? false : true}
-                disableBorderRadius={true}
-                style={styles.dishDropdown}
-                value={value}
-                onSelectItem={({ value }) =>
-                  navigation.navigate("DishDetails", { value })
-                }
-                itemSeparator={true}
-                itemSeparatorStyle={styles.separator}
-                zIndex={i === 0 ? 3000 : i === 1 ? 2000 : 1000}
-                zIndexInverse={i === 0 ? 1000 : i === 1 ? 2000 : 3000}
-                items={chosenDishes}
-                setOpen={
-                  dish.label === "Breakfast"
-                    ? setOpenBreakfast
-                    : dish.label === "Lunch"
-                    ? setOpenLunch
-                    : setOpenDinner
-                }
-                ArrowDownIconComponent={() =>
-                  chosenDishes.length ? (
-                    <MaterialIcons name={"keyboard-arrow-right"} size={20} />
-                  ) : (
-                    ""
-                  )
-                }
-                ArrowUpIconComponent={() =>
-                  chosenDishes.length ? (
-                    <MaterialIcons name={"keyboard-arrow-down"} size={20} />
-                  ) : (
-                    ""
-                  )
-                }
-                closeAfterSelecting={false}
-                min={0}
-              />
-            ))}
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <View contentContainerStyle={styles.scrollView}>
+            <ProgressChart
+              withCustomBarColorFromData
+              style={styles.progressChart}
+              data={data}
+              width={screenWidth - 25}
+              height={220}
+              strokeWidth={14}
+              radius={32}
+              chartConfig={chartConfig}
+            />
+            <WaterIntakeView />
+            <View
+              style={{ ...styles.dishContainer, minHeight: dishAreaHeight }}
+            >
+              {dishArray.map((dish, i) => (
+                <DropDownPicker
+                  key={i}
+                  open={
+                    dish.label === "Breakfast"
+                      ? openBreakfast
+                      : dish.label === "Lunch"
+                      ? openLunch
+                      : openDinner
+                  }
+                  onOpen={
+                    dish.label === "Breakfast"
+                      ? onOpenBreakfast
+                      : dish.label === "Lunch"
+                      ? onOpenLunch
+                      : onOpenDinner
+                  }
+                  listMode={"SCROLLVIEW"}
+                  dropDownContainerStyle={styles.dishDropdown}
+                  dropDownDirection={"BOTTOM"}
+                  placeholder={`${dish.label}: ${0} kcal`}
+                  disabled={chosenDishes.length ? false : true}
+                  disableBorderRadius={true}
+                  style={styles.dishDropdown}
+                  value={value}
+                  onSelectItem={({ value }) =>
+                    navigation.navigate("DishDetails", { value })
+                  }
+                  itemSeparator={true}
+                  itemSeparatorStyle={styles.separator}
+                  zIndex={i === 0 ? 3000 : i === 1 ? 2000 : 1000}
+                  zIndexInverse={i === 0 ? 1000 : i === 1 ? 2000 : 3000}
+                  items={chosenDishes}
+                  setOpen={
+                    dish.label === "Breakfast"
+                      ? setOpenBreakfast
+                      : dish.label === "Lunch"
+                      ? setOpenLunch
+                      : setOpenDinner
+                  }
+                  ArrowDownIconComponent={() =>
+                    chosenDishes.length ? (
+                      <MaterialIcons name={"keyboard-arrow-right"} size={20} />
+                    ) : (
+                      ""
+                    )
+                  }
+                  ArrowUpIconComponent={() =>
+                    chosenDishes.length ? (
+                      <MaterialIcons name={"keyboard-arrow-down"} size={20} />
+                    ) : (
+                      ""
+                    )
+                  }
+                  closeAfterSelecting={false}
+                  min={0}
+                />
+              ))}
+            </View>
+            <ModalView
+              setModalVisible={setModalVisible}
+              modalVisible={modalVisible}
+              loading={loading}
+              dishes={dishes}
+              value={value}
+              setValue={setValue}
+              submitModal={submitModal}
+              onChangeSearchValue={onChangeSearchValue}
+              valueSearch={valueSearch}
+              setValueSearch={setValueSearch}
+              dishArray={dishArray}
+              openOptionsSearch={openOptionsSearch}
+              onOpenOptionsSearch={onOpenOptionsSearch}
+              setOpenOptionsSearch={setOpenOptionsSearch}
+              openOptions={openOptions}
+              onOpenOptions={onOpenOptions}
+              setOpenOptions={setOpenOptions}
+            />
           </View>
-          <ModalView
-            setModalVisible={setModalVisible}
-            modalVisible={modalVisible}
-            loading={loading}
-            dishes={dishes}
-            value={value}
-            setValue={setValue}
-            submitModal={submitModal}
-            onChangeSearchValue={onChangeSearchValue}
-            valueSearch={valueSearch}
-            setValueSearch={setValueSearch}
-            dishArray={dishArray}
-            openOptionsSearch={openOptionsSearch}
-            onOpenOptionsSearch={onOpenOptionsSearch}
-            setOpenOptionsSearch={setOpenOptionsSearch}
-            openOptions={openOptions}
-            onOpenOptions={onOpenOptions}
-            setOpenOptions={setOpenOptions}
-          />
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </ScrollView>
     </>
   );
 };
@@ -365,7 +370,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: "transparent",
     borderRadius: 30,
-    marginBottom: 80,
+    marginBottom: 20,
   },
   separator: {
     backgroundColor: "#ddd",

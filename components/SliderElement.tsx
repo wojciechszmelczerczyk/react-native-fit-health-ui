@@ -1,38 +1,31 @@
-import React, { useEffect, useRef } from "react";
-import Slider from "react-native-smooth-slider";
-import { AppRegistry, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import Slider from "@react-native-community/slider";
+import { StyleSheet, Text, View } from "react-native";
 
-const SliderElement = () => {
-  const value = useRef(1);
-
+const SliderElement = ({ value, setValue }: any) => {
   return (
     <View style={styles.container}>
       <Slider
-        value={value.current}
-        useNativeDriver={true}
+        value={value}
         minimumValue={0}
         maximumValue={10}
-        disabled={false}
+        step={1}
         minimumTrackTintColor='#8BBEE8FF'
-        TrackTintColor='#8BBEE8FF'
         thumbTintColor='#8BBEE8FF'
-        onValueChange={(val: any) => (value.current = val)}
+        onValueChange={(val: any) => setValue(val)}
       />
-      <Text>{value.current}</Text>
     </View>
   );
 };
-
-// AppRegistry.registerComponent("SliderElement", () => SliderElement);
 
 export default SliderElement;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 6,
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 100,
     alignItems: "stretch",
     justifyContent: "center",
   },
