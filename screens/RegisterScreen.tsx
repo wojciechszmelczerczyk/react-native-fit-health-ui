@@ -63,7 +63,7 @@ export default function Register({ navigation }: any) {
   const signUp = async () => {
     try {
       const res = await signUpUser(auth, email.current, password.current);
-      if (res.user) navigation.navigate("Login");
+      if (res.user) navigation.navigate("StartUserInfo");
     } catch (err) {}
   };
 

@@ -154,7 +154,7 @@ const StartUserInfoScreen = ({ navigation }) => {
               setIsIndicatorVisible(true);
               setTimeout(() => {
                 setIsIndicatorVisible(false);
-                navigation.navigate("Home");
+                navigation.navigate("Login");
               }, 2000);
             }}
             title='Submit info'

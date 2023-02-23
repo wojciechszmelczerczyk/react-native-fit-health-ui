@@ -6,9 +6,10 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 import UserScreen from "./screens/UserScreen";
-import { maybeCompleteAuthSession } from "expo-web-browser";
-import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
+import StartUserInfoScreen from "./screens/StartUserInfoScreen";
 import CalendarScreen from "./screens/CalendarScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
+import { maybeCompleteAuthSession } from "expo-web-browser";
 import { DayNameContext } from "./context/DayNameContext";
 import { DayNumberContext } from "./context/DayNumberContext";
 import { UserContext } from "./context/UserContext";
@@ -83,6 +84,13 @@ export default function App() {
                   headerShown: false,
                 }}
                 component={CalendarScreen}
+              />
+              <Stack.Screen
+                name='StartUserInfo'
+                options={{
+                  headerShown: false,
+                }}
+                component={StartUserInfoScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>
