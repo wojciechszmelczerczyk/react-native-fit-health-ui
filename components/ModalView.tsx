@@ -69,7 +69,7 @@ export default function ModalView({
             </Pressable>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => setModalVisible(false)}
             >
               <Text style={styles.textStyle}>Cancel</Text>
             </Pressable>

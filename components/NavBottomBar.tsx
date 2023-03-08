@@ -76,7 +76,7 @@ export const NavBottomBar = () => {
                   flex: 1,
                   justifyContent: "center",
                 }}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => setModalVisible(true)}
               >
                 <MaterialCommunityIcons name={"plus"} color='#fff' size={25} />
               </TouchableOpacity>
