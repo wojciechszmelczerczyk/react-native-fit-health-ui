@@ -5,14 +5,14 @@ import testIDs from "../testIDs";
 import { agendaItems, getMarkedDates } from "../agendaItems";
 import TrainingView from "../components/TrainingView";
 import { UserContext } from "../context/UserContext";
-import ModalView from "../components/ModalView";
+import TrainingModalView from "../components/TrainingModalView";
 
 const ITEMS = agendaItems;
 
 const TrainingScreen = ({ route, navigation }: any) => {
   const marked = useRef(getMarkedDates());
 
-  const { modalVisible, setModalVisible } = route.params;
+  const { trainingModalVisible, setTrainingModalVisible } = route.params;
 
   const [user] = useContext(UserContext);
 
@@ -49,10 +49,10 @@ const TrainingScreen = ({ route, navigation }: any) => {
           <TrainingView space={i} navigation={navigation} />
         ))}
       </ScrollView>
-      {/* <ModalView
-        setModalVisible={setModalVisible}
-        modalVisible={modalVisible}
-      /> */}
+      <TrainingModalView
+        trainingModalVisible={trainingModalVisible}
+        setTrainingModalVisible={setTrainingModalVisible}
+      />
     </View>
   );
 };

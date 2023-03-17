@@ -6,7 +6,10 @@ import TrainingDetailsScreen from "./TrainingDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
-const TrainingScreen = ({ modalVisible, setModalVisible }: any) => {
+const TrainingScreen = ({
+  trainingModalVisible,
+  setTrainingModalVisible,
+}: any) => {
   return (
     <Stack.Navigator initialRouteName='DishMain'>
       <Stack.Screen
@@ -16,8 +19,8 @@ const TrainingScreen = ({ modalVisible, setModalVisible }: any) => {
         }}
         component={TrainingMainScreen}
         initialParams={{
-          modalVisible: modalVisible,
-          setModalVisible: setModalVisible,
+          trainingModalVisible: trainingModalVisible,
+          setTrainingModalVisible: setTrainingModalVisible,
         }}
       />
       <Stack.Screen

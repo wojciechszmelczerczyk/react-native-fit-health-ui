@@ -18,7 +18,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { getDish } from "../services/DietService";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import _ from "lodash";
-import ModalView from "../components/ModalView";
+import DishModalView from "../components/DishModalView";
 import WaterIntakeView from "../components/WaterIntakeView";
 
 // get screen width
@@ -39,7 +39,7 @@ const chartConfig = {
 };
 
 const DishMainScreen = ({ route, navigation }: any) => {
-  const { modalVisible, setModalVisible } = route.params;
+  const { dishModalVisible, setDishModalVisible } = route.params;
 
   // boolean condition, when dropdown from diet page is open/close
   const [openBreakfast, setOpenBreakfast] = useState(false);
@@ -167,7 +167,7 @@ const DishMainScreen = ({ route, navigation }: any) => {
     // setChosenDishes(chosenDishes);
 
     // off modal
-    setModalVisible(!modalVisible);
+    setDishModalVisible(!dishModalVisible);
   };
 
   // chart data
@@ -179,7 +179,7 @@ const DishMainScreen = ({ route, navigation }: any) => {
 
   return (
     <>
-      {modalVisible ? (
+      {dishModalVisible ? (
         <BlurView
           tint='dark'
           intensity={100}
@@ -269,9 +269,9 @@ const DishMainScreen = ({ route, navigation }: any) => {
                 />
               ))}
             </View>
-            <ModalView
-              setModalVisible={setModalVisible}
-              modalVisible={modalVisible}
+            <DishModalView
+              setDishModalVisible={setDishModalVisible}
+              dishModalVisible={dishModalVisible}
               loading={loading}
               dishes={dishes}
               value={value}

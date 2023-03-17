@@ -12,7 +12,8 @@ import DateHeader from "./DateHeader";
 export const NavBottomBar = () => {
   const navigation = useNavigation() as any;
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [trainingModalVisible, setTrainingModalVisible] = useState(false);
+  const [dishModalVisible, setDishModalVisible] = useState(false);
 
   const _renderIcon = (routeName: any, selectedTab: any) => {
     let icon = "";
@@ -76,7 +77,13 @@ export const NavBottomBar = () => {
                   flex: 1,
                   justifyContent: "center",
                 }}
-                onPress={() => setModalVisible(true)}
+                onPress={() => {
+                  if (selectedTab === "Diet") {
+                    setDishModalVisible(true);
+                  } else if (selectedTab === "Training") {
+                    setTrainingModalVisible(true);
+                  }
+                }}
               >
                 <MaterialCommunityIcons name={"plus"} color='#fff' size={25} />
               </TouchableOpacity>
@@ -146,8 +153,8 @@ export const NavBottomBar = () => {
             }}
             component={() => (
               <TrainingScreen
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
+                trainingModalVisible={trainingModalVisible}
+                setTrainingModalVisible={setTrainingModalVisible}
               />
             )}
             position='LEFT'
@@ -184,8 +191,8 @@ export const NavBottomBar = () => {
             position='RIGHT'
             component={() => (
               <DishScreen
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
+                dishModalVisible={dishModalVisible}
+                setDishModalVisible={setDishModalVisible}
               />
             )}
           />

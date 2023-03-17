@@ -6,7 +6,7 @@ import DishMainScreen from "./DishMainScreen";
 
 const Stack = createNativeStackNavigator();
 
-const DishScreen = ({ modalVisible, setModalVisible }: any) => {
+const DishScreen = ({ dishModalVisible, setDishModalVisible }: any) => {
   return (
     <Stack.Navigator initialRouteName='DishMain'>
       <Stack.Screen
@@ -16,8 +16,8 @@ const DishScreen = ({ modalVisible, setModalVisible }: any) => {
         }}
         component={DishMainScreen}
         initialParams={{
-          modalVisible: modalVisible,
-          setModalVisible: setModalVisible,
+          dishModalVisible: dishModalVisible,
+          setDishModalVisible: setDishModalVisible,
         }}
       />
       <Stack.Screen

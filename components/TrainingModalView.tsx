@@ -1,11 +1,11 @@
+import React from "react";
 import { StyleSheet, Text, View, Modal, Pressable } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-import React from "react";
 
-export default function ModalView({
-  modalVisible,
-  setModalVisible,
+export default function TrainingModalView({
+  trainingModalVisible,
+  setTrainingModalVisible,
   loading,
   dishes,
   value,
@@ -22,12 +22,17 @@ export default function ModalView({
   onOpenOptions,
   setOpenOptions,
 }: any) {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA" + trainingModalVisible);
   return (
     <View>
-      <Modal animationType='slide' transparent={true} visible={modalVisible}>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={trainingModalVisible}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add dish!</Text>
+            <Text style={styles.modalText}>Add training!</Text>
             <DropDownPicker
               items={dishes}
               zIndex={2000}
@@ -69,7 +74,7 @@ export default function ModalView({
             </Pressable>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(false)}
+              onPress={() => setTrainingModalVisible(false)}
             >
               <Text style={styles.textStyle}>Cancel</Text>
             </Pressable>

@@ -63,7 +63,7 @@ export default function Register({ navigation }: any) {
   const signUp = async () => {
     try {
       const res = await signUpUser(auth, email.current, password.current);
-      if (res.user) navigation.navigate("StartUserInfo");
+      if (res.user) navigation.navigate("LoginScreen");
     } catch (err) {}
   };
 
@@ -87,17 +87,13 @@ export default function Register({ navigation }: any) {
           disabled={!request}
           style={styles.socialButton}
           imageSource={require("../assets/social/google.png")}
-          onPress={() => {
-            googlePrompt;
-          }}
+          onPress={googlePrompt}
         />
         <SocialButton
           text='Continue with Facebook'
           disabled={!req}
           style={styles.socialButton}
-          onPress={() => {
-            fbPrompt;
-          }}
+          onPress={fbPrompt}
         />
         {Platform.OS === "ios" ? (
           <SocialButton
